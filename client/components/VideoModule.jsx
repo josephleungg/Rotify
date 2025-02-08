@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 import WebSocketComponent from './WebSocketComponent';
 // import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 

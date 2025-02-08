@@ -5,6 +5,7 @@ import { faCloudArrowUp, faForward, faLink } from '@fortawesome/free-solid-svg-i
 function Conversions({ selectMethodDisplay }) {
     const [topic,setTopic] = useState('');
     const [isValid, setIsValid] = useState(false);
+    const maxTopicCount = 30;
 
     const handleClick = (method) => () => {
         selectMethodDisplay(method);
@@ -16,7 +17,7 @@ function Conversions({ selectMethodDisplay }) {
     }
 
     useEffect(() => {
-        if(topic.length > 30){
+        if(topic.length > maxTopicCount){
             setIsValid(true);
         }
         else{
@@ -34,7 +35,7 @@ function Conversions({ selectMethodDisplay }) {
             <div className='flex items-center justify-center'>
                 <input
                     type="text"
-                    placeholder="What should we learn today? (min 30 chars)"
+                    placeholder={`What topic should we learn today? (min ${maxTopicCount} chars)`}
                     value={topic}
                     onChange={handleTopicChange}
                     className="border-2 border-[#1A1D2D] bg-[#1A1D2D] p-2 text-textGray font-monomaniac text-[20px] rounded-l-lg w-[35vw] outline-none placeholder:text-textGray placeholder:font-monomaniac placeholder:text-[20px] placeholder:text-opacity-25"

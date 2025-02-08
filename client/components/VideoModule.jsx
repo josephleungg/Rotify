@@ -2,8 +2,9 @@
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
-import Chat from "./Chat";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import WebSocketComponent from './WebSocketComponent';
+// import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -199,7 +200,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           </div>
 
           {/* Chat menu */}
-          {chatOpen && <Chat />}
+          {chatOpen && <WebSocketComponent />}
       </div>
     </div>
   );

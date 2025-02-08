@@ -1,3 +1,5 @@
+import { Jaro, Monomaniac_One } from 'next/font/google';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -8,9 +10,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "#000416",
+        textGray: "#8A8A8A",
       },
+      fontFamily: {
+        Monomaniac: ["Monomaniac One", 'serif'],
+        Jaro: ["Jaro", 'serif']
+      }
     },
   },
   plugins: [],

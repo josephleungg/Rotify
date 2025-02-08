@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import UrlField from "@/components/UrlField";
-import FileUpload from "@/components/fileUpload";
+import FileUpload from "@/components/FileUpload";
 import Conversions from "@/components/conversions";
 
 import Image from "next/image";

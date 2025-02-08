@@ -5,6 +5,8 @@ import { OpenAI } from 'openai';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fileUpload from 'express-fileupload';
+import cors from 'cors';
 
 import chatbotRoutes from './routes/chatbotRoutes.js';
 
@@ -16,10 +18,14 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
+app.use(fileUpload());
+
 const PORT = 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+app.use(cors());
 
 // Initialize OpenAI API client
 const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });

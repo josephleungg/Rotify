@@ -46,7 +46,7 @@ const UrlField = ({ selectMethodDisplay }) => {
         const data = await response.json();
         console.log('Summary:', data);
         // Navigate to the /video page with the resulting information
-        router.push(`/video?summary=${encodeURIComponent(JSON.stringify(data))}`);
+        router.push(`/video?summary=${(JSON.stringify(data))}`);
       } else {
         console.error('Failed to summarize URL');
       }

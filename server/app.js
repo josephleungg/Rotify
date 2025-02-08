@@ -5,6 +5,7 @@ import { OpenAI } from 'openai';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from 'cors';
 
 import chatbotRoutes from './routes/chatbotRoutes.js';
 
@@ -20,6 +21,8 @@ const PORT = 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+app.use(cors());
 
 // Initialize OpenAI API client
 const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });

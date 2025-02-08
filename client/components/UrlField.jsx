@@ -59,7 +59,8 @@ const UrlField = ({ selectMethodDisplay }) => {
                   <h1 className=" font-jaro text-3xl">Generate</h1>
               </div>
             </Link>
-        </div>  
+        </div> 
+      </div> 
   );
 };
 

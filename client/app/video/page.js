@@ -1,3 +1,4 @@
+'use client'
 import VideoModule from "@/components/VideoModule";
 import Navbar from "@/components/navbar";
 

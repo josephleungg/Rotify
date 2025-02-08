@@ -1,6 +1,8 @@
 "use client";
-
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
+// import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -54,7 +56,7 @@ const VideoModule = () => {
 
   return (
     <div className="bg-background h-screen">
-        <div className="flex flex-col items-center justify-center relative w-screen pt-16 bg-background">
+        <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
           <div className="w-[23%] h-auto max-w-[100%]">
             <video
               ref={videoRef}
@@ -70,10 +72,23 @@ const VideoModule = () => {
               Your browser does not support the video tag.
             </video>
           </div>
-        <div>
-          <button onClick={handlePlay} className='text-white'>Play</button>
-          <button onClick={handlePause} className='text-white'>Pause</button>
-        </div>
+          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
+            </div>
+          </div>
       </div>
     </div>
     

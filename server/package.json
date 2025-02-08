@@ -2,17 +2,23 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-  "start": "nodemon app.js",
-  "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "puppeteer": "^24.2.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "@babel/core": "^7.21.0",
+    "@babel/cli": "^7.21.0",
+    "@babel/preset-env": "^7.21.0",
+    "@babel/node": "^7.21.0"
   }
 }

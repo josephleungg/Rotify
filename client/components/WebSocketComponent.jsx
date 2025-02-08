@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRotateRight, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 // Call this component in the page where the chat is appearing
 // use summaryContext to pass the summary of the topic you are inquiring about
@@ -94,6 +96,11 @@ const WebSocketComponent = ({ summaryContext }) => {
     };
 
     const sendMessage = () => {
+        if (!input.trim()) {
+            console.log('Cannot send an empty message');
+            return; // Exit the function early
+        }
+    
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             // Add user message to the chat history
             setMessages((prevMessages) => [
@@ -108,81 +115,43 @@ const WebSocketComponent = ({ summaryContext }) => {
     };
 
     return (
-        <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-            <h1>WebSocket Chat</h1>
-            <div
-                style={{
-                    border: '1px solid #ccc',
-                    borderRadius: '8px',
-                    padding: '10px',
-                    height: '400px',
-                    overflowY: 'auto',
-                    marginBottom: '10px',
-                    position: 'relative',
-                }}
-            >
-                {/* Close button (X) */}
-                <button
-                    onClick={handleCloseConnection}
-                    style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        background: 'transparent',
-                        border: 'none',
-                        fontSize: '18px',
-                        cursor: 'pointer',
-                        color: '#dc3545',
-                    }}
-                    title="Close Connection"
-                >
-                    ×
-                </button>
+        
+            <div className="border border-gray-300 rounded-3xl p-3 max-w-[397px] w-[397px] max-h-[707px] min-h-[707px] h-[707px] overflow-y-auto relative flex flex-col">
+                <div className="flex-1 overflow-y-auto">
+                    {messages.map((msg, index) => (
+                        <div
+                            key={index}
+                            className={`mb-3 text-${msg.role === 'user' ? 'right' : 'left'}`}
+                        >
+                            <span
+                                className={`inline-block px-3 py-2 rounded-xl ${
+                                    msg.role === 'user'
+                                        ? 'bg-blue-500 text-white text-right ml-12'
+                                        : 'bg-gray-100 text-black mr-12'
+                                }`}
+                            >
+                                {msg.content}
+                            </span>
+                        </div>
+                    ))}
+                    {isTyping && (
+                        <div className="mb-3 text-left">
+                            <span className="inline-block px-3 py-2 rounded-xl bg-gray-100 text-black">
+                                Typing...
+                            </span>
+                        </div>
+                    )}
+                </div>
 
-                {messages.map((msg, index) => (
-                    <div
-                        key={index}
-                        style={{
-                            textAlign: msg.role === 'user' ? 'right' : 'left',
-                            marginBottom: '10px',
-                        }}
-                    >
-                        <span
-                            style={{
-                                display: 'inline-block',
-                                padding: '8px 12px',
-                                borderRadius: '12px',
-                                backgroundColor: msg.role === 'user' ? '#007bff' : '#f1f1f1',
-                                color: msg.role === 'user' ? '#fff' : '#000',
-                            }}
-                        >
-                            {msg.content}
-                        </span>
-                    </div>
-                ))}
-                {isTyping && (
-                    <div style={{ textAlign: 'left', marginBottom: '10px' }}>
-                        <span
-                            style={{
-                                display: 'inline-block',
-                                padding: '8px 12px',
-                                borderRadius: '12px',
-                                backgroundColor: '#f1f1f1',
-                                color: '#000',
-                            }}
-                        >
-                            Typing...
-                        </span>
-                    </div>
-                )}
-            </div>
-            <div style={{ display: 'flex', marginBottom: '10px' }}>
+                {/* Input and Buttons Container */}
+            <div className="relative flex items-center gap-2">
+                {/* Input Field */}
                 <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type a message"
-                    style={{ flex: 1, padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                    className="flex-1 p-2 pl-4 pr-12 rounded-2xl border-[#1A1D2D] bg-[#1A1D2D] text-textGray outline-none"
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                             sendMessage();
@@ -190,35 +159,24 @@ const WebSocketComponent = ({ summaryContext }) => {
                     }}
                     disabled={!isConnected} // Disable input if not connected
                 />
-                <button
+
+                {/* Send Button */}
+                <div
+                    className="p-3 rounded-full bg-[#414558] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed w-9 h-9 flex items-center justify-center"
                     onClick={sendMessage}
-                    style={{
-                        marginLeft: '10px',
-                        padding: '8px 16px',
-                        borderRadius: '4px',
-                        border: 'none',
-                        backgroundColor: '#007bff',
-                        color: '#fff',
-                        cursor: 'pointer',
-                    }}
-                    disabled={!isConnected} // Disable send button if not connected
+                    disabled={!isConnected || !input.trim()} // Disable send button if not connected or input is empty
                 >
-                    Send
-                </button>
+                    <FontAwesomeIcon icon={faPaperPlane} className="text-white w-4 h-4" />
+                </div>
+
+                {/* Reconnect Button */}
+                <div
+                    className="p-3 rounded-full bg-[#414558] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed w-9 h-9 flex items-center justify-center"
+                    onClick={handleReconnect}
+                >
+                    <FontAwesomeIcon icon={faArrowRotateRight} className="text-white w-4 h-4" />
+                </div>
             </div>
-            <button
-                onClick={handleReconnect}
-                style={{
-                    padding: '8px 16px',
-                    borderRadius: '4px',
-                    border: 'none',
-                    backgroundColor: isConnected ? '#28a745' : '#dc3545',
-                    color: '#fff',
-                    cursor: 'pointer',
-                }}
-            >
-                Reconnect
-            </button>
         </div>
     );
 };

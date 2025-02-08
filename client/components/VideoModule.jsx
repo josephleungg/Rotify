@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
-import Chat from "./Chat";
+import WebSocketComponent from './WebSocketComponent';
 // import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const videoFiles = [
@@ -136,7 +136,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           </div>
       
           {/* Video Buttons */}
-          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+          <div className="flex flex-col gap-4 top-0 items-center justify-center">
             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
             <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
             </div>
@@ -155,7 +155,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           </div>
 
           {/* Chat menu */}
-          {chatOpen && <Chat />}
+          {chatOpen && <WebSocketComponent />}
       </div>
     </div>
     

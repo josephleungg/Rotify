@@ -1,7 +1,9 @@
 "use client";
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+
+import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
+import Chat from "./Chat";
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -34,7 +36,14 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const [currentWord, setCurrentWord] = useState('');
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const textBlocks = splitTextIntoBlocks(text);
+  const [chatOpen, setChatOpen] = useState(false);
+
+   // toggle the chatOpen state
+   const toggleChat = () => {
+    setChatOpen((prev) => !prev); // Toggle the state
+  };
   const [togglePlay, setTogglePlay] = useState(true);
+
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -117,7 +126,9 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
 
   return (
     <div className="bg-background h-screen">
-      <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
+        <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
+          
+          {/* Video and Caption */}
         <div
           className="relative w-[23%] h-auto max-w-[100%] rounded-3xl overflow-hidden cursor-pointer"
           onClick={togglePlay ? handlePause : handlePlay}
@@ -131,48 +142,44 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           >
             <FontAwesomeIcon icon={togglePlay ? faPause : faPlay} className="h-6 w-6 text-white opacity-75" />
           </div>
-          <video
-            ref={videoRef}
-            className="w-full h-full overflow-hidden"
-            muted
-            controls={false}
-            loop
-            disablePictureInPicture
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '30%',
-            width: '100%',
-            textAlign: 'center',
-            color: 'white',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            padding: '10px',
-            fontSize: '24px',
-          }}
-        >
-          {textBlocks[currentBlockIndex]}
-        </div>
-        <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
-          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            {/* Video */}
+            <video
+              ref={videoRef}
+              className="w-full h-full overflow-hidden rounded-3xl"
+              muted
+              controls={false}
+              loop // Add the loop attribute for seamless looping
+              disablePictureInPicture
+            >
+              Your browser does not support the video tag.
+            </video>
+            {/* Captions */}
+            <div className="absolute bottom-[25%] w-full text-center text-white bg-transparent padding-[10px] text-[48px] font-bangers [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)] [-webkit-text-stroke:1px_black]">
+              {textBlocks[currentBlockIndex]}
+            </div>
+          </div>
+      
+          {/* Video Buttons */}
+          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
             <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
+              <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
+            </div>
           </div>
-          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-            <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
-          </div>
-          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-            <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
-          </div>
-          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-            <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
-          </div>
-          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-            <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
-          </div>
-        </div>
+
+          {/* Chat menu */}
+          {chatOpen && <Chat />}
       </div>
     </div>
   );

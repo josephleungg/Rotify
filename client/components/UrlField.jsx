@@ -60,6 +60,7 @@ const UrlField = ({ selectMethodDisplay }) => {
               </div>
             </Link>
         </div>  
+    </div>
   );
 };
 

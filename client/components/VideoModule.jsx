@@ -101,7 +101,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     };
     utterance.onboundary = (event) => {
       if (event.name === 'word') {
-        const spokenWord = textBlocks.join(' ').substring(event.charIndex, event.charIndex + event.charLength);
+        const spokenWord = textBlocks.join(' ').substring(event.charIndex, event.charIndex + event.charLength).trim();
         setCurrentWord(spokenWord);
       }
     };
@@ -119,6 +119,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     // Compare the current word with the last word in the current block
     const currentBlock = textBlocks[currentBlockIndex];
     const lastWordInBlock = currentBlock.split(/\s+/).pop();
+    console.log(`Current spoken word: ${currentWord}`);
     console.log(`Current block's last word: ${lastWordInBlock}`);
     if (currentWord === lastWordInBlock) {
       // Move to the next block

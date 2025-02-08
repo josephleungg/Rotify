@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import VideoModule from './VideoModule';
 
+const removePunctuation = (text) => {
+  return text.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "").toLowerCase();
+};
+
 const VideoGenerator = ({ summary }) => {
   const [text, setText] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -8,11 +12,11 @@ const VideoGenerator = ({ summary }) => {
   useEffect(() => {
     if (summary) {
       try {
-        const decodedSummary = decodeURIComponent(summary);
-        const parsedSummary = JSON.parse(decodedSummary);
+        const parsedSummary = JSON.parse(summary);
         const summaryText = parsedSummary.summary;
-        console.log(summaryText);
-        setText(summaryText);
+        const cleanedText = removePunctuation(summaryText);
+        console.log('Cleaned text:', cleanedText);
+        setText(cleanedText);
       } catch (error) {
         console.error('Error parsing summary:', error);
       } finally {

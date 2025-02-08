@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -17,8 +17,42 @@ const getRandomStartTime = (duration) => {
   return Math.max(0, Math.floor(Math.random() * (duration - 30)));
 };
 
-const VideoModule = () => {
+const splitTextIntoBlocks = (text, blockSize = 4) => {
+  const words = text.split(/\s+/); // Split text into words
+  const blocks = [];
+  for (let i = 0; i < words.length; i += blockSize) {
+    blocks.push(words.slice(i, i + blockSize).join(' '));
+  }
+  return blocks;
+};
+
+const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
+  const synth = window.speechSynthesis;
   const videoRef = useRef(null);
+  const utteranceRef = useRef(null);
+  const [currentWord, setCurrentWord] = useState('');
+  const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
+  const textBlocks = splitTextIntoBlocks(text);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+    if (!isSpeaking && utteranceRef.current) {
+      synth.speak(utteranceRef.current);
+      setIsSpeaking(true);
+    }
+  };
+
+  const handlePause = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    if (isSpeaking) {
+      synth.cancel();
+      setIsSpeaking(false);
+    }
+  };
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -29,28 +63,45 @@ const VideoModule = () => {
       const startTime = getRandomStartTime(videoElement.duration);
       videoElement.currentTime = startTime;
       videoElement.play();
-
-      const endTime = startTime + 30;
-      const checkTime = () => {
-        if (videoElement.currentTime >= endTime) {
-          // Reset to startTime and play again
-          videoElement.currentTime = startTime;
-          videoElement.play();
-        } else {
-          requestAnimationFrame(checkTime);
-        }
-      };
-      requestAnimationFrame(checkTime);
     };
-  }, []);
 
-  const handlePlay = () => {
-    videoRef.current.play();
-  };
+    videoElement.onerror = (error) => {
+      console.error('Error loading video:', error);
+    };
 
-  const handlePause = () => {
-    videoRef.current.pause();
-  };
+    const utterance = new SpeechSynthesisUtterance(textBlocks.join(' '));
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      setCurrentBlockIndex(0); // Reset to the first block
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0; // Reset video to the start
+        videoRef.current.play(); // Play the video again
+      }
+      synth.speak(utterance); // Restart TTS
+      setIsSpeaking(true);
+    };
+    utterance.onboundary = (event) => {
+      if (event.name === 'word') {
+        const spokenWord = textBlocks.join(' ').substring(event.charIndex, event.charIndex + event.charLength);
+        setCurrentWord(spokenWord);
+      }
+    };
+    utteranceRef.current = utterance;
+
+    // Start TTS on page load
+    handlePlay();
+  }, []); // Empty dependency array to run only once
+
+  useEffect(() => {
+    // Compare the current word with the last word in the current block
+    const currentBlock = textBlocks[currentBlockIndex];
+    const lastWordInBlock = currentBlock.split(/\s+/).pop();
+    console.log(`Current block's last word: ${lastWordInBlock}`);
+    if (currentWord === lastWordInBlock) {
+      // Move to the next block
+      setCurrentBlockIndex((prevIndex) => (prevIndex + 1) % textBlocks.length);
+    }
+  }, [currentWord, currentBlockIndex, textBlocks]);
 
   return (
     <div className="flex flex-col items-center justify-center relative w-screen h-screen">
@@ -69,6 +120,20 @@ const VideoModule = () => {
         >
           Your browser does not support the video tag.
         </video>
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '30%',
+          width: '100%',
+          textAlign: 'center',
+          color: 'white',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          padding: '10px',
+          fontSize: '24px',
+        }}
+      >
+        {textBlocks[currentBlockIndex]}
       </div>
       <div>
         <button onClick={handlePlay}>Play</button>

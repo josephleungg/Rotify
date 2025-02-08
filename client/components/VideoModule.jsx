@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
 import WebSocketComponent from './WebSocketComponent';
 // import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
@@ -42,15 +43,22 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
    const toggleChat = () => {
     setChatOpen((prev) => !prev); // Toggle the state
   };
+  const [togglePlay, setTogglePlay] = useState(true);
+
 
   const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play();
     }
     if (!isSpeaking && utteranceRef.current) {
-      synth.speak(utteranceRef.current);
+      if (synth.paused) {
+        synth.resume(); // Resume TTS if paused
+      } else {
+        synth.speak(utteranceRef.current); // Start TTS if not already speaking
+      }
       setIsSpeaking(true);
     }
+    setTogglePlay(true);
   };
 
   const handlePause = () => {
@@ -58,9 +66,10 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
       videoRef.current.pause();
     }
     if (isSpeaking) {
-      synth.cancel();
+      synth.pause(); // Pause TTS instead of canceling
       setIsSpeaking(false);
     }
+    setTogglePlay(false);
   };
 
   useEffect(() => {
@@ -99,6 +108,10 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
 
     // Start TTS on page load
     handlePlay();
+
+    return () => {
+      synth.cancel(); // Clean up TTS on component unmount
+    };
   }, []); // Empty dependency array to run only once
 
   useEffect(() => {
@@ -117,7 +130,19 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
         <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
           
           {/* Video and Caption */}
-          <div className="w-[23%] h-auto max-w-[100%] relative">
+        <div
+          className="relative w-[23%] h-auto max-w-[100%] rounded-3xl overflow-hidden cursor-pointer"
+          onClick={togglePlay ? handlePause : handlePlay}
+        >
+          <div
+            className={`${
+              togglePlay
+                ? "hidden"
+                : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 inset-0 flex items-center justify-center z-50 p-8 h-fit w-fit rounded-full bg-black bg-opacity-25"
+            }`}
+          >
+            <FontAwesomeIcon icon={togglePlay ? faPause : faPlay} className="h-6 w-6 text-white opacity-75" />
+          </div>
             {/* Video */}
             <video
               ref={videoRef}
@@ -158,7 +183,6 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           {chatOpen && <WebSocketComponent />}
       </div>
     </div>
-    
   );
 };
 

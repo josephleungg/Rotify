@@ -2,7 +2,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import Chat from "./Chat";
 
 const videoFiles = [

@@ -33,7 +33,7 @@ export default function Home() {
           height={32}
           crossOrigin="anonymous"
         />
-        <h1 className="text-[48px] font-jaro">Rotify</h1>
+        <h1 className="text-[48px] font-jaro text-white">Rotify</h1>
         <p className="font-jaro text-base text-textGray">
           Turn informaton into an engaging, brain-boosting video!
         </p>

@@ -1,23 +1,25 @@
 import { scrapeWebpage } from './utils/webscraperService.js';
-import { generateOpenAIResponse } from './utils/openaiService.js'
+import { summarizeContent } from './utils/openaiService.js'
 
 // calls the web scraper function and then sends to openai for summarization
 // this function is called in app.js for sockets
-async function summarizeContent() {
+async function scrapeContent(url) {
     try {
-        const scrapedContent = await scrapeWebpage('https://en.wikipedia.org/wiki/Blackjack');
-        console.log(scrapedContent);
+        console.log('Scraping webpage for content...');
+
+        // scrape the content from the webpage
+        const scrapedContent = await scrapeWebpage(url);
+        
+        // send scraped content to GPT 4o mini for summarization
+        try {
+            await summarizeContent(scrapedContent).then((response) => { console.log(response) });
+        } catch (error) {
+            console.error('Error generating OpenAI response:', error);
+        }
+
     } catch (error) {
         console.error('Error scraping webpage:', error);
     }
 }
 
-async function testOpenAIStreaming() {
-    try {
-        await generateOpenAIResponse();
-    } catch (error) {
-        console.error('Error streaming OpenAI response:', error);
-    }
-}
-
-testOpenAIStreaming();
+scrapeContent("https://foodess.com/article/how-to-make-a-cake-from-scratch/");

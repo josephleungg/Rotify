@@ -3,6 +3,10 @@ import puppeteer from 'puppeteer';
 // utility function to scrape the content from any webpage
 export async function scrapeWebpage(url) {
     try {
+        console.log('--------------------------------------------------');
+        console.log('Scraping webpage for content...');
+        console.log('--------------------------------------------------');
+        
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(url, { waitUntil: 'networkidle2' });
@@ -22,7 +26,9 @@ export async function scrapeWebpage(url) {
             };
         });
 
+        console.log('--------------------------------------------------');
         console.log('Page Content scraped successfully');
+        console.log('--------------------------------------------------');
 
         await browser.close();
 

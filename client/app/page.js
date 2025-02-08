@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import UrlField from "@/components/UrlField";
 import FileUpload from "@/components/fileUpload";
 import Conversions from "@/components/conversions";
+
 import Image from "next/image";
 
 export default function Home() {
@@ -51,7 +52,7 @@ export default function Home() {
       {/* {conversionsDisplay && <Conversions urlButton={urlButton} fileUploadButton={fileUploadButton} />}
       {urlDisplay && <UrlField urlButton={urlButton} fileUploadButton={fileUploadButton} backButton={backButton} />}
       {fileUploadDisplay && <FileUpload urlButton={urlButton} fileUploadButton={fileUploadButton} backButton={backButton} />} */}
-       
+
     </div>
   );
 }

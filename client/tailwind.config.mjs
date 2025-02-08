@@ -1,4 +1,5 @@
-import { Jaro, Monomaniac_One } from 'next/font/google';
+import { Jaro, Monomaniac_One, Bangers } from 'next/font/google';
+
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -15,7 +16,8 @@ export default {
       },
       fontFamily: {
         monomaniac: ["Monomaniac One", 'serif'],
-        jaro: ["Jaro", 'serif']
+        jaro: ["Jaro", 'serif'],
+        bangers: ["Bangers", 'serif'],
       }
     },
   },

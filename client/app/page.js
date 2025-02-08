@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UrlField from "@/components/UrlField";
 import FileUpload from "@/components/fileUpload";
 import Conversions from "@/components/conversions";
@@ -8,30 +8,22 @@ import Image from "next/image";
 
 export default function Home() {
 
-  const [conversionsDisplay, setConversionsDisplay] = useState(true);
-  const [urlDisplay, setUrlDisplay] = useState(false);
-  const [fileUploadDisplay, setFileUploadDisplay] = useState(false);
+  const [methodDisplay,setMethodDisplay] = useState('conversions');
+  const [animation, setAnimation] = useState(true);
+  const animationDuration = 200;
 
-  const fileUploadButton = () => {
-    setConversionsDisplay(false);
-    setUrlDisplay(false);
-    setFileUploadDisplay(true);
-  }
-
-  const urlButton = () => {
-    setConversionsDisplay(false);
-    setUrlDisplay(true);
-    setFileUploadDisplay(false);
-  }
-
-  const backButton = () => {
-    setConversionsDisplay(true);
-    setUrlDisplay(false);
-    setFileUploadDisplay(false);
-  }
+  const selectMethodDisplay = (method) => {
+    if (methodDisplay === method) return;
+    setAnimation(false);
+    
+    setTimeout(() => {
+      setMethodDisplay(method);
+      setAnimation(true);
+    }, animationDuration);
+  };
 
   return (
-    <div className="flex flex-col gap-24 items-center justify-center h-screen bg-slate-950">
+    <div className="flex flex-col gap-20 items-center justify-center h-screen bg-background">
 
       <div className="flex flex-col gap-1 items-center justify-center">
         <Image
@@ -42,14 +34,24 @@ export default function Home() {
           crossOrigin="anonymous"
         />
         <h1 className="text-[48px] font-jaro">Rotify</h1>
-        <p className="font-jaro text-base text-[#8A8A8A]">
+        <p className="font-jaro text-base text-textGray">
           Turn informaton into an engaging, brain-boosting video!
         </p>
       </div>
 
-      {conversionsDisplay && <Conversions urlButton={urlButton} fileUploadButton={fileUploadButton} />}
+      {/* { methodDisplay === 'conversions' ? <Conversions selectMethodDisplay={selectMethodDisplay} /> : '' }
+      { methodDisplay === 'upload' ? <FileUpload selectMethodDisplay={selectMethodDisplay} /> : '' }
+      { methodDisplay === 'url' ? <UrlField selectMethodDisplay={selectMethodDisplay} /> : '' } */}
+
+      <div className={`flex flex-col overflow-visible items-center transition-all duration-[${animationDuration}] ${animation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-40'}`}>
+        { methodDisplay === 'conversions' ? <Conversions selectMethodDisplay={selectMethodDisplay} /> : '' }
+        { methodDisplay === 'upload' ? <FileUpload selectMethodDisplay={selectMethodDisplay} /> : '' }
+        { methodDisplay === 'url' ? <UrlField selectMethodDisplay={selectMethodDisplay} /> : '' }
+      </div>
+
+      {/* {conversionsDisplay && <Conversions urlButton={urlButton} fileUploadButton={fileUploadButton} />}
       {urlDisplay && <UrlField urlButton={urlButton} fileUploadButton={fileUploadButton} backButton={backButton} />}
-      {fileUploadDisplay && <FileUpload urlButton={urlButton} fileUploadButton={fileUploadButton} backButton={backButton} />}
+      {fileUploadDisplay && <FileUpload urlButton={urlButton} fileUploadButton={fileUploadButton} backButton={backButton} />} */}
        
     </div>
   );

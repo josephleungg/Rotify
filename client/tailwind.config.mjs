@@ -18,7 +18,16 @@ export default {
         monomaniac: ["Monomaniac One", 'serif'],
         jaro: ["Jaro", 'serif'],
         bangers: ["Bangers", 'serif'],
-      }
+      },
+      keyframes: {
+        heartbeat: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
+        },
+      },
+      animation: {
+        heartbeat: 'heartbeat .2s forwards',
+      },
     },
   },
   plugins: [],

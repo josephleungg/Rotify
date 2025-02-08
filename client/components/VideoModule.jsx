@@ -38,6 +38,8 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const textBlocks = splitTextIntoBlocks(text);
   const [chatOpen, setChatOpen] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
    // toggle the chatOpen state
    const toggleChat = () => {
@@ -100,7 +102,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     };
     utterance.onboundary = (event) => {
       if (event.name === 'word') {
-        const spokenWord = textBlocks.join(' ').substring(event.charIndex, event.charIndex + event.charLength);
+        const spokenWord = textBlocks.join(' ').substring(event.charIndex, event.charIndex + event.charLength).trim();
         setCurrentWord(spokenWord);
       }
     };
@@ -118,12 +120,30 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     // Compare the current word with the last word in the current block
     const currentBlock = textBlocks[currentBlockIndex];
     const lastWordInBlock = currentBlock.split(/\s+/).pop();
+    console.log(`Current spoken word: ${currentWord}`);
     console.log(`Current block's last word: ${lastWordInBlock}`);
     if (currentWord === lastWordInBlock) {
       // Move to the next block
       setCurrentBlockIndex((prevIndex) => (prevIndex + 1) % textBlocks.length);
     }
   }, [currentWord, currentBlockIndex, textBlocks]);
+
+  const handleLike = () => {
+    if(isLiked){
+      setIsLiked(false);
+    }
+    else{
+      setIsLiked(true);
+    }
+  }
+  const handleSave = () => {
+    if(isSaved){
+      setIsSaved(false);
+    }
+    else{
+      setIsSaved(true);
+    }
+  }
 
   return (
     <div className="bg-background h-screen">
@@ -161,12 +181,12 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           </div>
       
           {/* Video Buttons */}
-          <div className="flex flex-col gap-4 top-0 items-center justify-center">
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-            <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
+          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleLike}>
+            <FontAwesomeIcon icon={faHeart} className={`h-7 w-7 transition-all ${isLiked ? 'text-red-500 animate-heartbeat' : 'text-white'}`} />
             </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleSave}>
+              <FontAwesomeIcon icon={faBookmark} className={`h-7 w-7 transition-all ${isSaved ? 'text-yellow-500 animate-heartbeat' : 'text-white'}`} />
             </div>
             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
               <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />

@@ -18,7 +18,16 @@ export default {
         monomaniac: ["Monomaniac One", 'serif'],
         jaro: ["Jaro", 'serif'],
         bangers: ["Bangers", 'serif'],
-      }
+      },
+      keyframes: {
+        pulse: {
+          '0%, 100%': { opacity: 0 },
+          '50%': { opacity: 1 },
+        },
+      },
+      animation: {
+        pulse: 'pulse 2s infinite',
+      },
     },
   },
   plugins: [],

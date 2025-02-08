@@ -4,9 +4,9 @@ import Navbar from "@/components/navbar";
 
 export default function Video() {
     return (
-      <>
+      <div>
         <Navbar />
         <VideoGenerator />
-      </>
+      </div>
     );
   }

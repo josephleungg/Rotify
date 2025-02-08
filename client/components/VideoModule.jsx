@@ -37,6 +37,8 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const textBlocks = splitTextIntoBlocks(text);
   const [chatOpen, setChatOpen] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
    // toggle the chatOpen state
    const toggleChat = () => {
@@ -124,6 +126,23 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     }
   }, [currentWord, currentBlockIndex, textBlocks]);
 
+  const handleLike = () => {
+    if(isLiked){
+      setIsLiked(false);
+    }
+    else{
+      setIsLiked(true);
+    }
+  }
+  const handleSave = () => {
+    if(isSaved){
+      setIsSaved(false);
+    }
+    else{
+      setIsSaved(true);
+    }
+  }
+
   return (
     <div className="bg-background h-screen">
         <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
@@ -161,11 +180,11 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
       
           {/* Video Buttons */}
           <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-            <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleLike}>
+            <FontAwesomeIcon icon={faHeart} className={`h-7 w-7 transition-all ${isLiked ? 'text-red-500' : 'text-white'}`} />
             </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleSave}>
+              <FontAwesomeIcon icon={faBookmark} className={`h-7 w-7 transition-all ${isSaved ? 'text-yellow-500' : 'text-white'}`} />
             </div>
             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
               <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />

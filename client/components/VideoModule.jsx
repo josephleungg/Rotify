@@ -126,10 +126,10 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
             className={`${
               togglePlay
                 ? "hidden"
-                : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 inset-0 flex items-center justify-center z-50 p-4 h-fit w-fit rounded-full bg-black bg-opacity-25"
+                : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 inset-0 flex items-center justify-center z-50 p-8 h-fit w-fit rounded-full bg-black bg-opacity-25"
             }`}
           >
-            <FontAwesomeIcon icon={togglePlay ? faPause : faPlay} className="h-12 w-12 text-white opacity-75" />
+            <FontAwesomeIcon icon={togglePlay ? faPause : faPlay} className="h-6 w-6 text-white opacity-75" />
           </div>
           <video
             ref={videoRef}

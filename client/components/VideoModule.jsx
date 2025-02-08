@@ -1,6 +1,8 @@
 "use client";
-
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
+// import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -104,42 +106,57 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   }, [currentWord, currentBlockIndex, textBlocks]);
 
   return (
-    <div className="flex flex-col items-center justify-center relative w-screen h-screen">
-      <div style={{ width: '30%', height: 'auto', maxWidth: '100%', maxHeight: '100%' }}>
-        <video
-          ref={videoRef}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain', // Use 'contain' to ensure the entire video is visible
-          }}
-          muted
-          controls={false}
-          loop // Add the loop attribute for seamless looping
-          disablePictureInPicture
-        >
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '30%',
-          width: '100%',
-          textAlign: 'center',
-          color: 'white',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          padding: '10px',
-          fontSize: '24px',
-        }}
-      >
-        {textBlocks[currentBlockIndex]}
-      </div>
-      <div>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Pause</button>
+    <div className="bg-background h-screen">
+        <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
+          <div className="w-[23%] h-auto max-w-[100%]">
+            <video
+              ref={videoRef}
+              className="w-full h-full overflow-hidden rounded-3xl"
+              style={{
+                // objectFit: 'contain', // Use 'contain' to ensure the entire video is visible
+              }}
+              muted
+              controls={false}
+              loop // Add the loop attribute for seamless looping
+              disablePictureInPicture
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '30%',
+              width: '100%',
+              textAlign: 'center',
+              color: 'white',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              padding: '10px',
+              fontSize: '24px',
+            }}
+          >
+            {textBlocks[currentBlockIndex]}
+          </div>
+          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
+            </div>
+            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+              <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
+            </div>
+          </div>
       </div>
     </div>
+    
   );
 };
 

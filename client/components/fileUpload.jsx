@@ -1,6 +1,7 @@
 import React,{ useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCloudArrowUp, faFile } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function FileUpload({ selectMethodDisplay }) {
     const [file,setFile] = useState(null);
@@ -58,10 +59,12 @@ export default function FileUpload({ selectMethodDisplay }) {
             >
                 <FontAwesomeIcon icon={faArrowLeft} className="h-8 w-8" />
             </div>
-            <div className={`h-[50px] px-8 flex flex-col justify-center items-center rounded-lg ${isValid ? 'bg-[#685680] cursor-pointer hover:scale-95 transition-all text-[#B1A6C0]' : ' border border-1 border-[#685680] text-textGray text-opacity-50' }`}
-                onClick={handleSubmit}>
-                <h1 className=" font-jaro text-3xl">Generate</h1>
-            </div>
+            <Link href="/video">
+              <div className={`h-[50px] px-8 flex flex-col justify-center items-center rounded-lg ${isValid ? 'bg-[#685680] cursor-pointer hover:scale-95 transition-all text-[#B1A6C0]' : ' border border-1 border-[#685680] text-textGray text-opacity-50' }`}
+                  onClick={handleSubmit}>
+                  <h1 className=" font-jaro text-3xl">Generate</h1>
+              </div>
+            </Link>
         </div>
     </div>
   );

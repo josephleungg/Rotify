@@ -20,13 +20,13 @@ export default {
         bangers: ["Bangers", 'serif'],
       },
       keyframes: {
-        pulse: {
-          '0%, 100%': { opacity: 0 },
-          '50%': { opacity: 1 },
+        heartbeat: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
         },
       },
       animation: {
-        pulse: 'pulse 2s infinite',
+        heartbeat: 'heartbeat .2s forwards',
       },
     },
   },

@@ -182,10 +182,10 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           {/* Video Buttons */}
           <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleLike}>
-            <FontAwesomeIcon icon={faHeart} className={`h-7 w-7 transition-all ${isLiked ? 'text-red-500' : 'text-white'}`} />
+            <FontAwesomeIcon icon={faHeart} className={`h-7 w-7 transition-all ${isLiked ? 'text-red-500 animate-heartbeat' : 'text-white'}`} />
             </div>
             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleSave}>
-              <FontAwesomeIcon icon={faBookmark} className={`h-7 w-7 transition-all ${isSaved ? 'text-yellow-500' : 'text-white'}`} />
+              <FontAwesomeIcon icon={faBookmark} className={`h-7 w-7 transition-all ${isSaved ? 'text-yellow-500 animate-heartbeat' : 'text-white'}`} />
             </div>
             <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
               <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />

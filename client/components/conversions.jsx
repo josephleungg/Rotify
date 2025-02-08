@@ -9,7 +9,7 @@ function Conversions({ selectMethodDisplay }) {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h1 className="font-monomaniac text-textGray text-md">
+      <h1 className="font-monomaniac text-textGray text-md mb-4">
         Select content conversion method
       </h1>
       <div className="flex gap-32">

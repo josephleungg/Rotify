@@ -11,14 +11,16 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "openai": "^4.83.0",
     "puppeteer": "^24.2.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9",
-    "@babel/core": "^7.21.0",
     "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.0",
+    "@babel/node": "^7.21.0",
     "@babel/preset-env": "^7.21.0",
-    "@babel/node": "^7.21.0"
+    "nodemon": "^3.1.9"
   }
 }

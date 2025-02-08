@@ -14,8 +14,8 @@ export default {
         textGray: "#8A8A8A",
       },
       fontFamily: {
-        Monomaniac: ["Monomaniac One", 'serif'],
-        Jaro: ["Jaro", 'serif']
+        monomaniac: ["Monomaniac One", 'serif'],
+        jaro: ["Jaro", 'serif']
       }
     },
   },

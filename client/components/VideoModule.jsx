@@ -1,8 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faHeart, faBookmark, faQuestion, faShare } from "@fortawesome/free-solid-svg-icons";
-// import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -35,15 +34,21 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const [currentWord, setCurrentWord] = useState('');
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const textBlocks = splitTextIntoBlocks(text);
+  const [togglePlay, setTogglePlay] = useState(true);
 
   const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play();
     }
     if (!isSpeaking && utteranceRef.current) {
-      synth.speak(utteranceRef.current);
+      if (synth.paused) {
+        synth.resume(); // Resume TTS if paused
+      } else {
+        synth.speak(utteranceRef.current); // Start TTS if not already speaking
+      }
       setIsSpeaking(true);
     }
+    setTogglePlay(true);
   };
 
   const handlePause = () => {
@@ -51,9 +56,10 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
       videoRef.current.pause();
     }
     if (isSpeaking) {
-      synth.cancel();
+      synth.pause(); // Pause TTS instead of canceling
       setIsSpeaking(false);
     }
+    setTogglePlay(false);
   };
 
   useEffect(() => {
@@ -92,6 +98,10 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
 
     // Start TTS on page load
     handlePlay();
+
+    return () => {
+      synth.cancel(); // Clean up TTS on component unmount
+    };
   }, []); // Empty dependency array to run only once
 
   useEffect(() => {
@@ -107,56 +117,64 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
 
   return (
     <div className="bg-background h-screen">
-        <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
-          <div className="w-[23%] h-auto max-w-[100%]">
-            <video
-              ref={videoRef}
-              className="w-full h-full overflow-hidden rounded-3xl"
-              style={{
-                // objectFit: 'contain', // Use 'contain' to ensure the entire video is visible
-              }}
-              muted
-              controls={false}
-              loop // Add the loop attribute for seamless looping
-              disablePictureInPicture
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
+      <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
+        <div
+          className="relative w-[23%] h-auto max-w-[100%] rounded-3xl overflow-hidden cursor-pointer"
+          onClick={togglePlay ? handlePause : handlePlay}
+        >
           <div
-            style={{
-              position: 'absolute',
-              bottom: '30%',
-              width: '100%',
-              textAlign: 'center',
-              color: 'white',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              padding: '10px',
-              fontSize: '24px',
-            }}
+            className={`${
+              togglePlay
+                ? "hidden"
+                : "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 inset-0 flex items-center justify-center z-50 p-8 h-fit w-fit rounded-full bg-black bg-opacity-25"
+            }`}
           >
-            {textBlocks[currentBlockIndex]}
+            <FontAwesomeIcon icon={togglePlay ? faPause : faPlay} className="h-6 w-6 text-white opacity-75" />
           </div>
-          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+          <video
+            ref={videoRef}
+            className="w-full h-full overflow-hidden"
+            muted
+            controls={false}
+            loop
+            disablePictureInPicture
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '30%',
+            width: '100%',
+            textAlign: 'center',
+            color: 'white',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            padding: '10px',
+            fontSize: '24px',
+          }}
+        >
+          {textBlocks[currentBlockIndex]}
+        </div>
+        <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
             <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
-            </div>
           </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
+          </div>
+        </div>
       </div>
     </div>
-    
   );
 };
 

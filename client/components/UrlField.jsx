@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 const UrlField = ({ selectMethodDisplay }) => {
   const handleClick = (method) => () => {
@@ -26,9 +27,11 @@ const UrlField = ({ selectMethodDisplay }) => {
         >
           <FontAwesomeIcon icon={faArrowLeft} className="h-8 w-8" />
         </div>
-        <div className="bg-[#685680] h-[50px] px-8 flex flex-col justify-center items-center rounded-lg cursor-pointer hover:scale-95 transition-all">
-          <h1 className="text-[#B1A6C0] font-jaro text-3xl">Generate</h1>
-        </div>
+        <Link href="/video">
+          <div className="bg-[#685680] h-[50px] px-8 flex flex-col justify-center items-center rounded-lg cursor-pointer hover:scale-95 transition-all">
+            <h1 className="text-[#B1A6C0] font-jaro text-3xl">Generate</h1>
+          </div>
+        </Link>
       </div>  
     </div>
   );

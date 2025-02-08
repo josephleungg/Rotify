@@ -53,28 +53,30 @@ const VideoModule = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative w-screen h-screen">
-      <div style={{ width: '30%', height: 'auto', maxWidth: '100%', maxHeight: '100%' }}>
-        <video
-          ref={videoRef}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'contain', // Use 'contain' to ensure the entire video is visible
-          }}
-          muted
-          controls={false}
-          loop // Add the loop attribute for seamless looping
-          disablePictureInPicture
-        >
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div>
-        <button onClick={handlePlay}>Play</button>
-        <button onClick={handlePause}>Pause</button>
+    <div className="bg-background h-screen">
+        <div className="flex flex-col items-center justify-center relative w-screen pt-16 bg-background">
+          <div className="w-[23%] h-auto max-w-[100%]">
+            <video
+              ref={videoRef}
+              className="w-full h-full overflow-hidden rounded-3xl"
+              style={{
+                // objectFit: 'contain', // Use 'contain' to ensure the entire video is visible
+              }}
+              muted
+              controls={false}
+              loop // Add the loop attribute for seamless looping
+              disablePictureInPicture
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        <div>
+          <button onClick={handlePlay} className='text-white'>Play</button>
+          <button onClick={handlePause} className='text-white'>Pause</button>
+        </div>
       </div>
     </div>
+    
   );
 };
 

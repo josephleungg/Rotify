@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 export default function FileUpload({ selectMethodDisplay }) {
   const handleClick = (method) => () => {
@@ -21,9 +22,11 @@ export default function FileUpload({ selectMethodDisplay }) {
         >
           <FontAwesomeIcon icon={faArrowLeft} className="h-8 w-8" />
         </div>
-        <div className="bg-[#685680] h-[50px] flex px-8 justify-center items-center rounded-lg cursor-pointer hover:scale-95 transition-all">
-          <h1 className="text-[#B1A6C0] font-jaro text-3xl">Generate</h1>
-        </div>
+        <Link href="/video">
+          <div className="bg-[#685680] h-[50px] flex px-8 justify-center items-center rounded-lg cursor-pointer hover:scale-95 transition-all">
+            <h1 className="text-[#B1A6C0] font-jaro text-3xl">Generate</h1>
+          </div>
+        </Link>
       </div>
     </div>
   );

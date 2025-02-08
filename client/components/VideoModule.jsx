@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 
 const videoFiles = [
   "./videos/minecraft.mp4",
-  "./videos/gta5.mp4"
+  "./videos/minecraft2.mp4"
 ];
 
 const getRandomVideo = () => {

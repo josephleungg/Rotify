@@ -26,7 +26,7 @@ const VideoGenerator = ({ summary }) => {
 
   return (
     <div>
-      <VideoModule text={text} isSpeaking={false} setIsSpeaking={() => {}} />
+      <VideoModule text={text} />
     </div>
   );
 };

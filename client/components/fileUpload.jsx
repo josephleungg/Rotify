@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faCloudArrowUp, faFile } from "@fortawesome/free-solid-svg-icons";
+import Loader from './Loader';
 
 const FileUpload = ({ selectMethodDisplay }) => {
   const [file, setFile] = useState(null);
@@ -56,6 +57,7 @@ const FileUpload = ({ selectMethodDisplay }) => {
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
+      {isSubmitting && <Loader />}
       <h1 className="font-monomaniac text-textGray text-md">
         Drop a file (ex. PDF, Slideshow, Article) we'll transform it into an immersive, interactive video
       </h1>

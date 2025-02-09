@@ -1,10 +1,14 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp, faForward, faLink } from '@fortawesome/free-solid-svg-icons';
+import Loader from './Loader';
 
 function Conversions({ selectMethodDisplay }) {
     const [topic,setTopic] = useState('');
     const [isValid, setIsValid] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const router = useRouter();
     const maxTopicCount = 30;
 
     const handleClick = (method) => () => {
@@ -25,13 +29,39 @@ function Conversions({ selectMethodDisplay }) {
         }
     },[topic])
 
-    const handleTopicSubmit = () =>{
+    const handleTopicSubmit = async () => {
         if(!isValid) return;
         console.log(topic);
+
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch('http://localhost:3000/summarize_text', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ text:topic }),
+            });
+      
+            if (response.ok) {
+              const data = await response.json();
+              console.log('Summary:', data);
+              // Navigate to the /video page with the resulting information
+              router.push(`/video?summary=${(JSON.stringify(data))}`);
+            } else {
+              console.error('Failed to summarize URL');
+            }
+          } catch (error) {
+            console.error('Error summarizing URL:', error);
+          } finally {
+            setIsSubmitting(false);
+          }
     }
 
     return (
         <div className="flex flex-col items-center justify-center">
+            {isSubmitting && <Loader />}
             <div className='flex items-center justify-center'>
                 <input
                     type="text"
@@ -45,6 +75,9 @@ function Conversions({ selectMethodDisplay }) {
                     <FontAwesomeIcon icon={faForward} className='h-4 w-4' />
                 </div>
             </div>
+
+
+
         <h1 className="font-monomaniac text-textGray text-md my-4">
             or select content conversion method
         </h1>

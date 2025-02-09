@@ -23,7 +23,7 @@ Rotify is a web application designed to enhance learning and engagement, particu
 
 *   Other voice options (possibly using your own through training your own voice model)
 *   Database implementation, saving your favourite brain-rot videos
-*   
+*   Generate more videos instead of just having one
 
 ## Contributors
 

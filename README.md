@@ -1,7 +1,7 @@
 # Rotify
 Hackathon project for HackHive 2025!
 
-[![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](YourDemoLinkHere)  *(Replace with your actual demo link)*
+[![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](https://www.youtube.com/watch?v=PjXUOong-DI)
 
 <p align="center">
   <img width="800" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" />

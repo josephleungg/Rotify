@@ -1,78 +1,96 @@
 # Rotify
+
 Hackathon project for HackHive 2025
-<img width="1159" alt="github" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" />
-<br />
-<div align="center">
-  <h1>Rotify</h1>
-  <p align="center">
-    Shorten your time by brain-rotting your mind
-  </p>
-</div>
+
+[![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](YourDemoLinkHere)  *(Replace with your actual demo link)*
+
+<p align="center">
+  <img width="800" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" /> *(Consider resizing image for better fit)*
+</p>
+
+<p align="center">
+  <h2>Rotify</h2>
+  <p>Brainrot your way to a better education.</p> *(Catchy tagline)*
+</p>
 
 ## What is Rotify?
 
-<br/>
-<h4>Rotify is a web application designed to enhance learning and engagement, particularly for Gen Z, by "brainrotting" traditional learning materials. Recognizing the challenges of short attention spans in the digital age, Rotify combines any text-based content—from articles and textbooks to scientific papers—with captivating satisfying footage in the background.  This creates a dynamic, multi-sensory learning experience that keeps users visually engaged and prevents information overload. Rotify aims to make learning more accessible and enjoyable by leveraging the same visual stimulation that often leads to distractions, turning potential brain drain into brain gain.</h4>
+Rotify is a web application designed to enhance learning and engagement, particularly for Gen Z, by "rotifying" traditional learning materials. Recognizing the challenges of short attention spans in the digital age, Rotify combines any text-based content—from articles and textbooks to scientific papers—with captivating and satisfying gameplay footage in the background. This creates a dynamic, multi-sensory learning experience that keeps users visually engaged and prevents information overload. Rotify aims to make learning more accessible and enjoyable by leveraging the same visual stimulation that often leads to distractions, turning potential brain drain into brain gain.
 
-## Video Demo [![Demo](https://img.shields.io/badge/Demo-yellow)]
+## Features
 
-## Features [![Contributors](https://img.shields.io/badge/Features-green)]
+[![Features](https://img.shields.io/badge/Features-green)](YourFeaturesListLink) *(Optional: Link to a more detailed feature list)*
 
-## Contributors [![Contributors](https://img.shields.io/badge/Contributors-brown)]
-- [Kush (@KU-5H)](https://github.com/KU-5H)
-- [Tristan (@Tristanv0)](https://github.com/Tristanv0) 
-- [Joseph (@josephleungg )](https://github.com/josephleungg)
-- [Dominic (@chen-dominic)](https://github.com/chen-dominic)
+*   Combine any text-based content with background gameplay.
+*   Customizable gameplay footage.
+*   Multi-sensory learning experience.
+*   Designed to improve engagement and retention.  *(Add more as needed)*
 
-## Technologies Used [![Technologies](https://img.shields.io/badge/Technologies-blue)]
+## Contributors
+
+[![Contributors](https://img.shields.io/badge/Contributors-brown)](YourContributorsLink) *(Optional: Link to contributors page/repo)*
+
+*   Kush ([@KU-5H](https://github.com/KU-5H))
+*   Tristan ([@Tristanv0](https://github.com/Tristanv0))
+*   Joseph ([@josephleungg](https://github.com/josephleungg))
+*   Dominic ([@chen-dominic](https://github.com/chen-dominic))
+
+## Technologies Used
+
+[![Technologies](https://img.shields.io/badge/Technologies-blue)](YourTechStackLink) *(Optional: Link to a page with more tech details)*
+
 ### Frontend
-[![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
-[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+*   [![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+*   [![Tailwind CSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+*   [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
+*   [![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ### Backend
-[![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
-[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![OpenAI](https://img.shields.io/badge/openAI-74aa9c?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
 
-## Installation [![Installation](https://img.shields.io/badge/Installation-purple)]
+*   [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
+*   [![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+*   [![OpenAI](https://img.shields.io/badge/openAI-74aa9c?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
+
+## Installation
+
+[![Installation](https://img.shields.io/badge/Installation-purple)](YourInstallationGuideLink) *(Optional: Link to more detailed instructions)*
+
 ```bash
-# Clone this repository
-$ git clone https://github.com/josephleungg/Rotify
+# Clone the repository
+git clone [https://github.com/josephleungg/Rotify](https://github.com/josephleungg/Rotify)
 
-# Go into the backend folder
-$ cd Rotify/server
+# Navigate to the server directory
+cd Rotify/server
 
-# install necessary dependencies
-$ npm install # using npm
-$ bun install # using bun
-$ pnpm install # using pnpm
-$ yarn install # using yarn
+# Install server dependencies (choose one)
+npm install
+bun install
+pnpm install
+yarn install
 
-# fill the environmental variable file with your openai key
-# OPENAI_KEY="ENTER YOUR KEY HERE"
-$ touch .env
+# Create the .env file and add your OpenAI key
+touch .env
+echo "OPENAI_KEY=\"YOUR_OPENAI_KEY\"" > .env  *(Or manually edit .env)*
 
-# go to the frontend folder
-$ cd ../client
+# Navigate to the client directory
+cd ../client
 
-# install necessary packages
-$ npm install # using npm
-$ bun install # using bun
-$ pnpm install # using pnpm
-$ yarn install # using yarn
+# Install client dependencies (choose one)
+npm install
+bun install
+pnpm install
+yarn install
 
-# run the development server and go to localhost:3000
-$ npm run dev
-$ bun run dev
-$ pnpm run dev
-$ yarn run dev
+# Run the development server (choose one)
+npm run dev
+bun run dev
+pnpm run dev
+yarn run dev
 
-# run the server
-$ cd ../server
-$ npm start
-$ bun start
-$ pnpm start
-$ yarn start
-```
+# Run the server (choose one)
+cd ../server
+npm start
+bun start
+pnpm start
+yarn start

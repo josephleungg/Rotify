@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPlay, faPause, faComment } from "@fortawesome/free-solid-svg-icons";
 import WebSocketComponent from './WebSocketComponent';
 import Loader from './Loader';
-// import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const videoFiles = [
   "./videos/minecraft.mp4",
@@ -30,7 +29,7 @@ const splitTextIntoBlocks = (text, blockSize = 4) => {
   return blocks;
 };
 
-const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
+const VideoModule = ({ text }) => {
   const synth = window.speechSynthesis;
   const videoRef = useRef(null);
   const utteranceRef = useRef(null);
@@ -39,31 +38,53 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const [togglePlay, setTogglePlay] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false); // Internal TTS state
+  const [pausedWordIndex, setPausedWordIndex] = useState(0); // Track paused position
   const textBlocks = splitTextIntoBlocks(text);
-  const [isLoading,setIsLoading] = useState(false);
+
+  // Track whether the captions should update
+  const shouldUpdateCaptions = useRef(true);
 
   const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play();
     }
-    if (!isSpeaking && utteranceRef.current) {
-      console.log('Starting TTS');
-      synth.speak(utteranceRef.current);
-      setIsSpeaking(true);
+  
+    if (synth.paused) {
+      synth.resume(); // Resume speech if paused
+    } else if (!isSpeaking) {
+      console.log('Resuming TTS from paused position');
+      const utterance = new SpeechSynthesisUtterance(
+        textBlocks.slice(currentBlockIndex * 4).join(' ')
+      );
+      utterance.rate = 1;
+      utterance.onboundary = utteranceRef.current.onboundary;
+      utterance.onend = utteranceRef.current.onend;
+      utteranceRef.current = utterance;
+      synth.speak(utterance);
     }
+  
     setTogglePlay(true);
+    setIsSpeaking(true);
+    shouldUpdateCaptions.current = true;
   };
+  
 
   const handlePause = () => {
     if (videoRef.current) {
       videoRef.current.pause();
     }
-    if (isSpeaking) {
-      synth.cancel();
-      setIsSpeaking(false);
+  
+    if (synth.speaking) {
+      synth.pause(); // Pause TTS
     }
+  
     setTogglePlay(false);
+    setIsSpeaking(false);
+    shouldUpdateCaptions.current = false;
   };
+  
 
   const toggleChat = () => {
     setChatOpen(!chatOpen);
@@ -113,7 +134,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     };
 
     utterance.onboundary = (event) => {
-      if (event.name === "word") {
+      if (event.name === "word" && shouldUpdateCaptions.current) {
         // Calculate the current block index based on the word index
         const newIndex = Math.floor(wordIndex / 4); // Assuming block size is 4 words
 
@@ -144,6 +165,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
 
   const handleQuizOpen = async () => {
     try {
+      handlePause(); // Pause video and TTS
       setIsLoading(true);
       const response = await fetch('http://localhost:3000/create_quiz', {
         method: 'POST',
@@ -152,17 +174,17 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
         },
         body: JSON.stringify({ text }),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to fetch quiz data');
       }
-  
+
       const quizData = await response.json();
-      
+
       const queryString = encodeURIComponent(JSON.stringify(quizData));
 
-    // Open the quiz page in a new tab with the quiz data as a query parameter
-    window.open(`/quiz?data=${queryString}`, '_blank');
+      // Open the quiz page in a new tab with the quiz data as a query parameter
+      window.open(`/quiz?data=${queryString}`, '_blank');
     } catch (error) {
       console.error('Error:', error);
     } finally {
@@ -170,23 +192,13 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     }
   };
 
-  const handleLike = () =>{
-    if(isLiked){
-      setIsLiked(false);
-    }
-    else{
-      setIsLiked(true);
-    }
-  }
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
 
-  const handleSave = () =>{
-    if(isSaved){
-      setIsSaved(false);
-    }
-    else{
-      setIsSaved(true);
-    }
-  }
+  const handleSave = () => {
+    setIsSaved(!isSaved);
+  };
 
   return (
     <div className="bg-background h-screen">

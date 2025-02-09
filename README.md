@@ -9,7 +9,7 @@ Hackathon project for HackHive 2025!
 
 <p align="center">
   <h2>Rotify</h2>
-  <p>Shorten your time by brain-rotting your mind</p>
+  <p>Save your time by brain-rotting your mind</p>
 </p>
 
 ## What is Rotify?

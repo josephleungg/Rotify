@@ -18,6 +18,7 @@ export default {
         monomaniac: ["Monomaniac One", 'serif'],
         jaro: ["Jaro", 'serif'],
         bangers: ["Bangers", 'serif'],
+        roboto: ["Roboto", 'serif'],
       },
       keyframes: {
         heartbeat: {

@@ -22,7 +22,7 @@ const WebSocketComponent = ({ summaryContext }) => {
             const initData = {
                 type: 'init',
                 role: 'developer', 
-                content: 'you are a assistant answering questions about this topic, the video is about the summaryContext aswell. This is the topic: ' + summaryContext
+                content: 'you are a assistant answering questions about this topic: ' + summaryContext
             };
             ws.current.send(JSON.stringify(initData));
         };
@@ -119,7 +119,7 @@ const WebSocketComponent = ({ summaryContext }) => {
     };
 
     return (
-        <div className="border border-[#414558] rounded-3xl p-3 max-w-[397px] w-[397px] max-h-[707px] min-h-[707px] h-[707px] overflow-y-auto relative flex flex-col">
+        <div className="border border-[#414558] rounded-3xl p-3 max-w-[480px] w-[480px] max-h-[823px] min-h-[823px] h-[823px] overflow-y-auto relative flex flex-col">
             {/* Chat Messages Container */}
             <div
                 ref={chatContainerRef} // Attach the ref to the chat container
@@ -133,7 +133,7 @@ const WebSocketComponent = ({ summaryContext }) => {
                         <span
                             className={`inline-block px-3 py-2 ${
                                 msg.role === 'user'
-                                    ? 'bg-blue-500 text-white text-right ml-12 rounded-l-xl rounded-tr-xl'
+                                    ? 'bg-blue-500 text-white text-left ml-12 rounded-l-xl rounded-tr-xl'
                                     : 'bg-[#414558] text-white mr-12 rounded-r-xl rounded-tl-xl'
                             }`}
                         >

@@ -8,9 +8,7 @@ import Loader from './Loader';
 const videoFiles = [
   "./videos/minecraft.mp4",
   "./videos/minecraft2.mp4",
-  "./videos/subwaysurfers.mp4",
-  "./videos/asmr.mp4",
-  "./videos/asmr2.mp4"
+  "./videos/subwaysurfers.mp4"
 ];
 
 const getRandomVideo = () => {
@@ -44,6 +42,8 @@ const VideoModule = ({ text }) => {
   const [isSpeaking, setIsSpeaking] = useState(false); // Internal TTS state
   const [pausedWordIndex, setPausedWordIndex] = useState(0); // Track paused position
   const textBlocks = splitTextIntoBlocks(text);
+  const [animation, setAnimation] = useState(false);
+  const animationDuration = 200;
 
   // Track whether the captions should update
   const shouldUpdateCaptions = useRef(true);
@@ -89,7 +89,12 @@ const VideoModule = ({ text }) => {
   
 
   const toggleChat = () => {
-    setChatOpen(!chatOpen);
+    setAnimation(false);
+    
+    setTimeout(() => {
+      setChatOpen(!chatOpen);
+      setAnimation(true);
+    }, animationDuration);
   };
 
   useEffect(() => {
@@ -203,12 +208,12 @@ const VideoModule = ({ text }) => {
   };
 
   return (
-    <div className="bg-background h-screen">
+    <div className={`bg-background h-screen`}>
       {isLoading && <Loader />}
-      <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
+      <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-2 bg-background transition-all">
         {/* Video and Caption */}
         <div
-          className="relative w-[23%] h-auto max-w-[100%] rounded-3xl overflow-hidden cursor-pointer"
+          className={`relative w-[27%] h-auto max-w-[100%] rounded-3xl cursor-pointer transition-all duration-${animationDuration}`}
           onClick={togglePlay ? handlePause : handlePlay}
         >
           <div
@@ -238,7 +243,9 @@ const VideoModule = ({ text }) => {
         </div>
 
         {/* Video Buttons */}
-        <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+        <div
+          className={`flex flex-col gap-4 top-0 items-center mr-4 justify-center transition-all duration-${animationDuration}`}
+        >
           <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleLike}>
           <FontAwesomeIcon icon={faHeart} className={`h-6 w-6 transition-all ${isLiked ? 'text-red-500 animate-heartbeat' : 'text-white'}`} />
           </div>
@@ -257,7 +264,13 @@ const VideoModule = ({ text }) => {
         </div>
 
         {/* Chat menu */}
-        {chatOpen && <WebSocketComponent summaryContext={text} />}
+        <div
+          className={`flex flex-col overflow-visible items-center transition-all duration-${animationDuration} ${
+            chatOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-40'
+          }`}
+        >
+          {chatOpen && <WebSocketComponent summaryContext={text} />}
+        </div>
       </div>
     </div>
   );

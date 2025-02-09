@@ -7,6 +7,7 @@
 <div align="center">
   [![Rotify Demo](https://img.youtube.com/vi/PjXUOong-DI/0.jpg)](https://www.youtube.com/watch?v=PjXUOong-DI)
 </div>
+[![Rotify Demo](https://img.youtube.com/vi/PjXUOong-DI/0.jpg)](https://www.youtube.com/watch?v=PjXUOong-DI)
 
 <p align="center">
   <img width="1000" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/167655f3-272e-493c-889d-d70626127b97" />

@@ -8,7 +8,9 @@ import Loader from './Loader';
 const videoFiles = [
   "./videos/minecraft.mp4",
   "./videos/minecraft2.mp4",
-  "./videos/subwaysurfers.mp4"
+  "./videos/subwaysurfers.mp4",
+  "./videos/asmr.mp4",
+  "./videos/asmr2.mp4"
 ];
 
 const getRandomVideo = () => {

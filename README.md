@@ -1,6 +1,6 @@
 # Rotify
 
-Hackathon project for HackHive 2025
+Hackathon project for HackHive 2025!
 
 [![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](YourDemoLinkHere)  *(Replace with your actual demo link)*
 
@@ -19,16 +19,15 @@ Rotify is a web application designed to enhance learning and engagement, particu
 
 ## Features
 
-[![Features](https://img.shields.io/badge/Features-green)](YourFeaturesListLink) *(Optional: Link to a more detailed feature list)*
+[![Features](https://img.shields.io/badge/Features-green)](YourFeaturesListLink)
 
-*   Combine any text-based content with background gameplay.
-*   Customizable gameplay footage.
-*   Multi-sensory learning experience.
-*   Designed to improve engagement and retention.  *(Add more as needed)*
+*   Other voice options (possibly using your own through training your own voice model)
+*   Database implementation, saving your favourite brain-rot videos
+*   
 
 ## Contributors
 
-[![Contributors](https://img.shields.io/badge/Contributors-brown)](YourContributorsLink) *(Optional: Link to contributors page/repo)*
+[![Contributors](https://img.shields.io/badge/Contributors-brown)](YourContributorsLink)
 
 *   Kush ([@KU-5H](https://github.com/KU-5H))
 *   Tristan ([@Tristanv0](https://github.com/Tristanv0))
@@ -37,7 +36,7 @@ Rotify is a web application designed to enhance learning and engagement, particu
 
 ## Technologies Used
 
-[![Technologies](https://img.shields.io/badge/Technologies-blue)](YourTechStackLink) *(Optional: Link to a page with more tech details)*
+[![Technologies](https://img.shields.io/badge/Technologies-blue)]
 
 ### Frontend
 
@@ -54,43 +53,43 @@ Rotify is a web application designed to enhance learning and engagement, particu
 
 ## Installation
 
-[![Installation](https://img.shields.io/badge/Installation-purple)](YourInstallationGuideLink) *(Optional: Link to more detailed instructions)*
+[![Installation](https://img.shields.io/badge/Installation-purple)]
 
 ```bash
 # Clone the repository
-git clone [https://github.com/josephleungg/Rotify](https://github.com/josephleungg/Rotify)
+$ git clone [https://github.com/josephleungg/Rotify](https://github.com/josephleungg/Rotify)
 
 # Navigate to the server directory
-cd Rotify/server
+$ cd Rotify/server
 
 # Install server dependencies (choose one)
-npm install
-bun install
-pnpm install
-yarn install
+$ npm install
+$ bun install
+$ pnpm install
+$ yarn install
 
 # Create the .env file and add your OpenAI key
-touch .env
-echo "OPENAI_KEY=\"YOUR_OPENAI_KEY\"" > .env  *(Or manually edit .env)*
+$ touch .env
+$ echo "OPENAI_KEY=\"YOUR_OPENAI_KEY\"" > .env  *(Or manually edit .env)*
 
 # Navigate to the client directory
-cd ../client
+$ cd ../client
 
 # Install client dependencies (choose one)
-npm install
-bun install
-pnpm install
-yarn install
+$ npm install
+$ bun install
+$ pnpm install
+$ yarn install
 
 # Run the development server (choose one)
-npm run dev
-bun run dev
-pnpm run dev
-yarn run dev
+$ npm run dev
+$ bun run dev
+$ pnpm run dev
+$ yarn run dev
 
 # Run the server (choose one)
-cd ../server
-npm start
-bun start
-pnpm start
-yarn start
+$ cd ../server
+$ npm start
+$ bun start
+$ pnpm start
+$ yarn start

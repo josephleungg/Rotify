@@ -1,18 +1,4 @@
 # Rotify
-
-Hackathon project for HackHive 2025!
-
-[![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](YourDemoLinkHere)  *(Replace with your actual demo link)*
-
-<p align="center">
-  <img width="800" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" />
-</p>
-
-<p align="center">
-  <h2>Rotify</h2>
-  <p>Shorten your time by brain-rotting your mind</p>
-</p>
-
 Hackathon project for HackHive 2025!
 
 [![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](YourDemoLinkHere)  *(Replace with your actual demo link)*
@@ -51,16 +37,7 @@ Rotify is a web application designed to enhance learning and engagement, particu
 
 [![Technologies](https://img.shields.io/badge/Technologies-blue)]
 
-## Technologies Used
-
-[![Technologies](https://img.shields.io/badge/Technologies-blue)]
-
 ### Frontend
-
-*   [![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
-*   [![Tailwind CSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-*   [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
-*   [![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 *   [![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 *   [![Tailwind CSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
@@ -73,14 +50,6 @@ Rotify is a web application designed to enhance learning and engagement, particu
 *   [![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 *   [![OpenAI](https://img.shields.io/badge/openAI-74aa9c?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
 
-*   [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
-*   [![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-*   [![OpenAI](https://img.shields.io/badge/openAI-74aa9c?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
-
-## Installation
-
-[![Installation](https://img.shields.io/badge/Installation-purple)]
-
 ## Installation
 
 [![Installation](https://img.shields.io/badge/Installation-purple)]
@@ -88,10 +57,7 @@ Rotify is a web application designed to enhance learning and engagement, particu
 ```bash
 # Clone the repository
 $ git clone [https://github.com/josephleungg/Rotify](https://github.com/josephleungg/Rotify)
-# Clone the repository
-$ git clone [https://github.com/josephleungg/Rotify](https://github.com/josephleungg/Rotify)
 
-# Navigate to the server directory
 # Navigate to the server directory
 $ cd Rotify/server
 
@@ -104,17 +70,7 @@ $ yarn install
 # Create the .env file and add your OpenAI key
 $ touch .env
 $ echo "OPENAI_KEY=\"YOUR_OPENAI_KEY\"" > .env  *(Or manually edit .env)*
-# Install server dependencies (choose one)
-$ npm install
-$ bun install
-$ pnpm install
-$ yarn install
 
-# Create the .env file and add your OpenAI key
-$ touch .env
-$ echo "OPENAI_KEY=\"YOUR_OPENAI_KEY\"" > .env  *(Or manually edit .env)*
-
-# Navigate to the client directory
 # Navigate to the client directory
 $ cd ../client
 
@@ -123,20 +79,13 @@ $ npm install
 $ bun install
 $ pnpm install
 $ yarn install
-# Install client dependencies (choose one)
-$ npm install
-$ bun install
-$ pnpm install
-$ yarn install
 
-# Run the development server (choose one)
 # Run the development server (choose one)
 $ npm run dev
 $ bun run dev
 $ pnpm run dev
 $ yarn run dev
 
-# Run the server (choose one)
 # Run the server (choose one)
 $ cd ../server
 $ npm start

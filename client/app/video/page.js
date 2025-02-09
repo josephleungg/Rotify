@@ -8,9 +8,9 @@ export default function Video() {
   const summary = searchParams.get('summary');
 
   return (
-    <>
+    <div className="overflow-y-hidden h-screen">
       <Navbar />
       <VideoGenerator summary={summary} />
-    </>
+    </div>
   );
 }

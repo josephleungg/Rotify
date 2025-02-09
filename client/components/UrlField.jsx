@@ -70,6 +70,11 @@ const UrlField = ({ selectMethodDisplay }) => {
                 placeholder="Enter URL"
                 value={url}
                 onChange={handleUrlChange}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                      handleSubmit();
+                  }
+              }}
                 className="border-2 border-[#1A1D2D] bg-[#1A1D2D] p-2 text-textGray font-monomaniac text-[20px] rounded-lg w-[45vw] outline-none placeholder:text-textGray placeholder:font-monomaniac placeholder:text-[20px] placeholder:text-opacity-25"
             />
         </div>

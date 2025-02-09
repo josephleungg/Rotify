@@ -163,7 +163,7 @@ const Quiz = () => {
                     onClick={() => handleAnswerSelect(question.questionId, option.optionId)}
                     key={poo}
                   >
-                    <div className={`font-jaro h-12 w-12 text-center bg-background rounded-full text-xl text-white flex justify-center items-center
+                    <div className={`font-jaro h-12 w-12 text-center rounded-full text-xl text-white flex justify-center items-center
                             ${
                                 isSelected
                                 ? isSubmittedAndCorrect
@@ -171,9 +171,9 @@ const Quiz = () => {
                                   : isSubmittedAndIncorrect
                                   ? 'bg-[#783030]'
                                   : 'bg-[#2D3951]'
-                                : ''
+                                : 'bg-background'
                             }`}>
-                      <h1>{option.optionId}</h1>
+                        <h1>{option.optionId}</h1>
                     </div>
                     <p className="text-white text-lg font-light">{option.text}</p>
                   </div>

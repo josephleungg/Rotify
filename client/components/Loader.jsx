@@ -12,7 +12,7 @@ const Loader = () => {
   return (
     <div className='fixed flex-col top-0 left-0 w-full h-full bg-background flex justify-center items-center z-[9999] pointer-events-none'>
       <img src='/loader.gif' alt='Loading...' className='pointer-events-auto ' />
-      <div class="text-4xl font-jaro text-white animate-bounce">Rotifying content...</div>
+      <div className="text-4xl font-jaro text-white animate-bounce">Rotifying content...</div>
     </div>
   );
 };

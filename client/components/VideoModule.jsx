@@ -94,7 +94,6 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     utterance.rate = 1; // Adjust TTS speed
 
     let wordIndex = 0; // Track the current word index
-    let isPausedForPunctuation = false; // Track if we're pausing for punctuation
 
     utterance.onend = () => {
       console.log('TTS ended');
@@ -111,16 +110,11 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
 
     utterance.onboundary = (event) => {
       if (event.name === "word") {
-        const currentWord = textBlocks.join(' ').split(/\s+/)[wordIndex];
-
-        // Check if the current word ends with punctuation
-        const hasPunctuation = /[.,;!?]/.test(currentWord);
-
         // Calculate the current block index based on the word index
         const newIndex = Math.floor(wordIndex / 4); // Assuming block size is 4 words
 
         // Update the block index slightly earlier by checking if we're near the end of the current block
-        if (wordIndex % 4 === 2 && !isPausedForPunctuation) { // Update when the 3rd word of the block is spoken
+        if (wordIndex % 4 === 2) { // Update when the 3rd word of the block is spoken
           setCurrentBlockIndex(newIndex + 1);
         }
 
@@ -130,16 +124,6 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
         if (wordIndex >= textBlocks.length * 4) {
           wordIndex = 0;
           setCurrentBlockIndex(0);
-        }
-
-        // Add a delay if punctuation is detected
-        if (hasPunctuation && !isPausedForPunctuation) {
-          isPausedForPunctuation = true; // Prevent overlapping updates
-          const pauseDuration = currentWord.endsWith('.') ? 700 : 500; // Longer pause for periods, shorter for commas
-          setTimeout(() => {
-            setCurrentBlockIndex((prevIndex) => (prevIndex + 1) % textBlocks.length);
-            isPausedForPunctuation = false; // Reset the pause flag
-          }, pauseDuration);
         }
       }
     };

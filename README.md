@@ -5,12 +5,12 @@ Hackathon project for HackHive 2025
 [![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](YourDemoLinkHere)  *(Replace with your actual demo link)*
 
 <p align="center">
-  <img width="800" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" /> *(Consider resizing image for better fit)*
+  <img width="800" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" />
 </p>
 
 <p align="center">
   <h2>Rotify</h2>
-  <p>Brainrot your way to a better education.</p> *(Catchy tagline)*
+  <p>Shorten your time by brain-rotting your mind</p>
 </p>
 
 ## What is Rotify?

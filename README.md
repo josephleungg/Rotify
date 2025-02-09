@@ -1,6 +1,6 @@
 # Rotify
 Hackathon project for HackHive 2025
-<img width="1186" alt="Screenshot at Feb 09 00-04-51" src="https://github.com/user-attachments/assets/bf4c1afd-c072-4158-8b61-ec1277eb1cd5" />
+<img width="1159" alt="github" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" />
 <br />
 <div align="center">
   <h1>Rotify</h1>

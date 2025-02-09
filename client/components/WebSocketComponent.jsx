@@ -25,7 +25,7 @@ const WebSocketComponent = ({ summaryContext }) => {
             const initData = {
                 type: 'init',
                 role: 'developer', 
-                content: 'you are a assistant answering questions about this topic: ' + summaryContext
+                content: 'you are a assistant answering questions about this topic, the video is about the summaryContext aswell. This is the topic: ' + summaryContext
             };
             ws.current.send(JSON.stringify(initData));
         };

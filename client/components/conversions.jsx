@@ -9,7 +9,7 @@ function Conversions({ selectMethodDisplay }) {
     const [isValid, setIsValid] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
-    const maxTopicCount = 30;
+    const maxTopicCount = 15;
 
     const handleClick = (method) => () => {
         selectMethodDisplay(method);
@@ -21,7 +21,7 @@ function Conversions({ selectMethodDisplay }) {
     }
 
     useEffect(() => {
-        if(topic.length > maxTopicCount){
+        if(topic.length >= maxTopicCount){
             setIsValid(true);
         }
         else{
@@ -68,6 +68,11 @@ function Conversions({ selectMethodDisplay }) {
                     placeholder={`What topic should we learn today? (min ${maxTopicCount} chars)`}
                     value={topic}
                     onChange={handleTopicChange}
+                    onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                            handleTopicSubmit();
+                        }
+                    }}
                     className="border-2 border-[#1A1D2D] bg-[#1A1D2D] p-2 text-textGray font-monomaniac text-[20px] rounded-l-lg w-[35vw] outline-none placeholder:text-textGray placeholder:font-monomaniac placeholder:text-[20px] placeholder:text-opacity-25"
                 />
                 <div className={`py-3 px-6 rounded-r-lg transition-all ${isValid ? 'bg-[#685680] cursor-pointer hover:bg-[#b3a3c8] text-white' : ' border border-1 border-[#685680] text-textGray text-opacity-50' }`}

@@ -2,16 +2,13 @@ import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRotateRight, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
-// Call this component in the page where the chat is appearing
-// use summaryContext to pass the summary of the topic you are inquiring about
-// <WebSocketComponent summaryContext={"STRING"} />
-
 const WebSocketComponent = ({ summaryContext }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const [isConnected, setIsConnected] = useState(false); // Track connection status
     const ws = useRef(null);
+    const chatContainerRef = useRef(null); // Ref for the chat container
 
     // Function to establish WebSocket connection
     const connectWebSocket = () => {
@@ -25,7 +22,7 @@ const WebSocketComponent = ({ summaryContext }) => {
             const initData = {
                 type: 'init',
                 role: 'developer', 
-                content: 'you are a assistant answering questions about this topic: ' + summaryContext
+                content: 'you are a assistant answering questions about this topic, the video is about the summaryContext aswell. This is the topic: ' + summaryContext
             };
             ws.current.send(JSON.stringify(initData));
         };
@@ -38,6 +35,7 @@ const WebSocketComponent = ({ summaryContext }) => {
                 setIsTyping(false);
             } else {
                 // Append the chunk to the last message
+                setIsTyping(true);
                 setMessages((prevMessages) => {
                     const lastMessage = prevMessages[prevMessages.length - 1];
                     if (lastMessage && lastMessage.role === 'assistant') {
@@ -51,7 +49,6 @@ const WebSocketComponent = ({ summaryContext }) => {
                         return [...prevMessages, { role: 'assistant', content: message }];
                     }
                 });
-                setIsTyping(true);
             }
         };
 
@@ -77,6 +74,13 @@ const WebSocketComponent = ({ summaryContext }) => {
         };
     }, []);
 
+    // Auto-scroll to the bottom when messages update
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [messages]); // Trigger this effect whenever messages change
+
     // Function to reconnect WebSocket
     const handleReconnect = () => {
         if (ws.current) {
@@ -100,7 +104,7 @@ const WebSocketComponent = ({ summaryContext }) => {
             console.log('Cannot send an empty message');
             return; // Exit the function early
         }
-    
+
         if (ws.current && ws.current.readyState === WebSocket.OPEN) {
             // Add user message to the chat history
             setMessages((prevMessages) => [
@@ -115,43 +119,39 @@ const WebSocketComponent = ({ summaryContext }) => {
     };
 
     return (
-        
-            <div className="border border-gray-300 rounded-3xl p-3 max-w-[397px] w-[397px] max-h-[707px] min-h-[707px] h-[707px] overflow-y-auto relative flex flex-col">
-                <div className="flex-1 overflow-y-auto">
-                    {messages.map((msg, index) => (
-                        <div
-                            key={index}
-                            className={`mb-3 text-${msg.role === 'user' ? 'right' : 'left'}`}
+        <div className="border border-[#414558] rounded-3xl p-3 max-w-[397px] w-[397px] max-h-[707px] min-h-[707px] h-[707px] overflow-y-auto relative flex flex-col">
+            {/* Chat Messages Container */}
+            <div
+                ref={chatContainerRef} // Attach the ref to the chat container
+                className="flex-1 overflow-y-auto rounded-t-xl"
+            >
+                {messages.map((msg, index) => (
+                    <div
+                        key={index}
+                        className={`mb-3 text-${msg.role === 'user' ? 'right' : 'left'}`}
+                    >
+                        <span
+                            className={`inline-block px-3 py-2 ${
+                                msg.role === 'user'
+                                    ? 'bg-blue-500 text-white text-right ml-12 rounded-l-xl rounded-tr-xl'
+                                    : 'bg-[#414558] text-white mr-12 rounded-r-xl rounded-tl-xl'
+                            }`}
                         >
-                            <span
-                                className={`inline-block px-3 py-2 rounded-xl ${
-                                    msg.role === 'user'
-                                        ? 'bg-blue-500 text-white text-right ml-12'
-                                        : 'bg-gray-100 text-black mr-12'
-                                }`}
-                            >
-                                {msg.content}
-                            </span>
-                        </div>
-                    ))}
-                    {isTyping && (
-                        <div className="mb-3 text-left">
-                            <span className="inline-block px-3 py-2 rounded-xl bg-gray-100 text-black">
-                                Typing...
-                            </span>
-                        </div>
-                    )}
-                </div>
+                            {msg.content}
+                        </span>
+                    </div>
+                ))}
+            </div>
 
-                {/* Input and Buttons Container */}
-            <div className="relative flex items-center gap-2">
+            {/* Input and Buttons Container */}
+            <div className="relative flex items-center gap-2 border-t border-t-[#414558] pt-1">
                 {/* Input Field */}
                 <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type a message"
-                    className="flex-1 p-2 pl-4 pr-12 rounded-2xl border-[#1A1D2D] bg-[#1A1D2D] text-textGray outline-none"
+                    className="flex-1 p-2 pl-4 pr-12 bg-transparent text-textGray outline-none"
                     onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                             sendMessage();

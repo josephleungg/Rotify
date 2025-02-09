@@ -1,6 +1,6 @@
 import express from 'express';
 import { scrapeWebpage } from '../utils/webscraperService.js';
-import { summarizeContent } from '../utils/openaiService.js';
+import { summarizeContent, summarizePrompt } from '../utils/openaiService.js';
 import fileUpload from 'express-fileupload';
 import pdfParse from 'pdf-parse';
 
@@ -57,7 +57,7 @@ router.post("/summarize_text", async (req, res) => {
     const { text } = req.body;
 
     try {
-        const summary = await summarizeContent(text);
+        const summary = await summarizePrompt(text);
 
         console.log(summary);
         res.status(200).json({ summary });

@@ -43,3 +43,35 @@ export async function summarizeContent(textContent) {
         throw error;
     }
 };
+
+// generate a response from openAI given a summarized prompt
+export async function summarizePrompt(textContent) {
+
+    try {
+        console.log('--------------------------------------------------');
+        console.log('Generating OpenAI response...');
+        console.log('--------------------------------------------------');
+
+        const completion = await openai.chat.completions.create({
+            messages: [
+                { 
+                    role: "user", 
+                    content: "\n Tell me about this topic: " + textContent + " give me a MINIMUM of 6 paragraphs. Dont use any headers! Give me a step by step if it is a learning summary. DONT MENTION THAT THIS IS COMING FROM A WEBPAGE, JUST GIVE ME THE SUMMARIZATION. Do this as fast as you can, I don't have time to wait." 
+                }
+            ],
+            model: "gpt-4o-mini",
+        });
+
+        console.log('--------------------------------------------------');
+        console.log('Generated OpenAI response');
+        console.log('--------------------------------------------------');
+
+        console.log(completion);
+
+        // return the generated response
+        return completion.choices[0].message.content;
+    } catch (error) {
+        console.error('Error generating OpenAI response:', error);
+        throw error;
+    }
+};

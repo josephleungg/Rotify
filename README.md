@@ -1,3 +1,4 @@
+<img src="https://github.com/josephleungg/Rotify/blob/main/client/public/banner.png?raw=true" alt="drawing" width="200"/>
 # Rotify
 Hackathon project for HackHive 2025!
 

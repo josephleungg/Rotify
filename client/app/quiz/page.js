@@ -1,62 +1,73 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
+import confetti from 'canvas-confetti';
 
 const Quiz = () => {
   const [selectedAnswers, setSelectedAnswers] = useState({}); // Track selected answers
   const [isSubmitted, setIsSubmitted] = useState(false); // Track if quiz is submitted
   const [isValid, setIsValid] = useState(false); // Track if quiz is valid (e.g., all questions answered)
   const [score,setScore] = useState(null);
+  const [quizData,setQuizData] = useState(null);
 
-  const testData = {
-    "quizTitle": "Science & Technology Trivia",
-    "questions": [
-      {
-        "questionId": 1,
-        "questionText": "What is the chemical symbol for gold?",
-        "options": [
-          { "optionId": "A", "text": "Ag" },
-          { "optionId": "B", "text": "Au" },
-          { "optionId": "C", "text": "Pb" },
-          { "optionId": "D", "text": "Fe" }
-        ],
-        "correctAnswer": "B"
-      },
-      {
-        "questionId": 2,
-        "questionText": "Who developed the theory of general relativity?",
-        "options": [
-          { "optionId": "A", "text": "Isaac Newton" },
-          { "optionId": "B", "text": "Albert Einstein" },
-          { "optionId": "C", "text": "Nikola Tesla" },
-          { "optionId": "D", "text": "Galileo Galilei" }
-        ],
-        "correctAnswer": "B"
-      },
-      {
-        "questionId": 3,
-        "questionText": "Which planet has the most moons?",
-        "options": [
-          { "optionId": "A", "text": "Saturn" },
-          { "optionId": "B", "text": "Jupiter" },
-          { "optionId": "C", "text": "Neptune" },
-          { "optionId": "D", "text": "Uranus" }
-        ],
-        "correctAnswer": "A"
-      },
-      {
-        "questionId": 4,
-        "questionText": "What is the powerhouse of the cell?",
-        "options": [
-          { "optionId": "A", "text": "Nucleus" },
-          { "optionId": "B", "text": "Mitochondria" },
-          { "optionId": "C", "text": "Ribosome" },
-          { "optionId": "D", "text": "Endoplasmic Reticulum" }
-        ],
-        "correctAnswer": "B"
-      },
-    ],
-  }
+  useEffect(() => {
+    // Parse the query parameter from the URL
+    const queryParams = new URLSearchParams(window.location.search);
+    const data = queryParams.get('data');
+    if (data) {
+      setQuizData(JSON.parse(decodeURIComponent(data)));
+    }
+  }, []);
+  
+//   const testData = {
+//     "quizTitle": "Science & Technology Trivia",
+//     "questions": [
+//       {
+//         "questionId": 1,
+//         "questionText": "What is the chemical symbol for gold?",
+//         "options": [
+//           { "optionId": "A", "text": "Ag" },
+//           { "optionId": "B", "text": "Au" },
+//           { "optionId": "C", "text": "Pb" },
+//           { "optionId": "D", "text": "Fe" }
+//         ],
+//         "correctAnswer": "B"
+//       },
+//       {
+//         "questionId": 2,
+//         "questionText": "Who developed the theory of general relativity?",
+//         "options": [
+//           { "optionId": "A", "text": "Isaac Newton" },
+//           { "optionId": "B", "text": "Albert Einstein" },
+//           { "optionId": "C", "text": "Nikola Tesla" },
+//           { "optionId": "D", "text": "Galileo Galilei" }
+//         ],
+//         "correctAnswer": "B"
+//       },
+//       {
+//         "questionId": 3,
+//         "questionText": "Which planet has the most moons?",
+//         "options": [
+//           { "optionId": "A", "text": "Saturn" },
+//           { "optionId": "B", "text": "Jupiter" },
+//           { "optionId": "C", "text": "Neptune" },
+//           { "optionId": "D", "text": "Uranus" }
+//         ],
+//         "correctAnswer": "A"
+//       },
+//       {
+//         "questionId": 4,
+//         "questionText": "What is the powerhouse of the cell?",
+//         "options": [
+//           { "optionId": "A", "text": "Nucleus" },
+//           { "optionId": "B", "text": "Mitochondria" },
+//           { "optionId": "C", "text": "Ribosome" },
+//           { "optionId": "D", "text": "Endoplasmic Reticulum" }
+//         ],
+//         "correctAnswer": "B"
+//       },
+//     ],
+//   }
   
 
   // Handle answer selection
@@ -68,7 +79,7 @@ const Quiz = () => {
         [questionId]: optionId,
       }));
       const selectedCount = Object.keys(selectedAnswers).length + 1;
-      const questionCount = testData.questions.length;
+      const questionCount = quizData.questions.length;
       if(selectedCount >= questionCount){
         setIsValid(true);
       }
@@ -81,11 +92,11 @@ const Quiz = () => {
   // Handle submit
   const handleSubmit = () => {
     const selectedCount = Object.keys(selectedAnswers).length + 1;
-    const questionCount = testData.questions.length;
+    const questionCount = quizData.questions.length;
     if(selectedCount < questionCount) return;
 
     let correctCount = 0;
-    testData.questions.forEach((question) => {
+    quizData.questions.forEach((question) => {
       if (selectedAnswers[question.questionId] === question.correctAnswer) {
         correctCount++;
       }
@@ -94,7 +105,9 @@ const Quiz = () => {
     // Calculate the percentage of correct answers
     const percentage = (correctCount / questionCount) * 100;
     setScore(percentage);
-
+    if(percentage >= 80){
+        confetti();
+    }
     setIsSubmitted(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -111,7 +124,7 @@ const Quiz = () => {
   // Check if the selected answer is correct
   const isAnswerCorrect = (questionId) => {
     const selectedAnswer = selectedAnswers[questionId];
-    const correctAnswer = testData.questions.find(
+    const correctAnswer = quizData.questions.find(
       (q) => q.questionId === questionId
     )?.correctAnswer;
     return selectedAnswer === correctAnswer;
@@ -122,11 +135,11 @@ const Quiz = () => {
       <Navbar />
       <div className="bg-[#1A1D2D] w-[1000px] h-fit flex flex-col justify-center rounded-xl px-12 font-roboto pb-20">
         <h1 className="text-center text-white text-5xl py-8 border-b-1 border-white font-jaro">
-          {testData.quizTitle}
+          {quizData?.quizTitle}
         </h1>
-        {testData.questions.map((question, index) => (
+        {quizData?.questions.map((question, index) => (
           <div className="flex flex-col mb-4" key={index}>
-            <h2 className="text-white text-2xl font-bold">
+            <h2 className="text-white text-xl font-bold">
               {question.questionId}. {question.questionText}
             </h2>
             <div className="flex flex-col ml-12 py-4">

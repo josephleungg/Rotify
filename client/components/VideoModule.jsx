@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import WebSocketComponent from './WebSocketComponent';
+import Loader from './Loader';
 // import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const videoFiles = [
@@ -37,6 +38,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const [chatOpen, setChatOpen] = useState(false);
   const [togglePlay, setTogglePlay] = useState(false);
   const textBlocks = splitTextIntoBlocks(text);
+  const [isLoading,setIsLoading] = useState(false);
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -154,8 +156,37 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     };
   }, []);
 
+  const handleQuizOpen = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:3000/create_quiz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch quiz data');
+      }
+  
+      const quizData = await response.json();
+      
+      const queryString = encodeURIComponent(JSON.stringify(quizData));
+
+    // Open the quiz page in a new tab with the quiz data as a query parameter
+    window.open(`/quiz?data=${queryString}`, '_blank');
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="bg-background h-screen">
+      {isLoading && <Loader />}
       <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
         {/* Video and Caption */}
         <div
@@ -199,7 +230,7 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
             <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
           </div>
-          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleQuizOpen}>
             <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
           </div>
           <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">

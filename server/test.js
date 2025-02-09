@@ -1,5 +1,5 @@
 import { scrapeWebpage } from './utils/webscraperService.js';
-import { summarizeContent } from './utils/openaiService.js'
+import { summarizeContent, convertFileBufferToBase64 } from './utils/openaiService.js'
 
 // calls the web scraper function and then sends to openai for summarization
 // this function is called in app.js for sockets

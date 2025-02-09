@@ -23,13 +23,29 @@ export default function FileUpload({ selectMethodDisplay }) {
     };
     
     const validateFileType = (file) => {
-        const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const validTypes = ['application/pdf'];
         return validTypes.includes(file.type);
     };
 
-    const handleSubmit = () => {
+    // Handle form submission to upload file and receive summarized content
+    const handleSubmit = async () => {
         if(!isValid) return;
-        console.log(file);
+        try {
+            const formData = new FormData();
+            formData.append('pdfFile', file);
+            fetch('http://localhost:3000/summarize_file', {
+                method: 'POST',
+                body: formData,
+            })
+            .then((response) => {
+                return response.text()
+            })
+            .then((data) => {
+                console.log(data);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     return (

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/josephleungg/Rotify/blob/main/client/public/rotify-logo.png?raw=true" alt="drawing" width="500"/>
+  <img src="https://github.com/josephleungg/Rotify/blob/main/client/public/rotify-logo.png?raw=true" alt="drawing" width="300"/>
   <h1>Rotify</h1>
 </div>
 

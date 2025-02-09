@@ -1,7 +1,10 @@
-# Rotify
-Hackathon project for HackHive 2025!
+<div align="center">
+  <img src="https://github.com/josephleungg/Rotify/blob/main/client/public/banner.png?raw=true" alt="drawing" width="200"/>
+  <h1>Rotify</h1>
+</div>
 
-[![Rotify Demo](https://img.shields.io/badge/Rotify-Demo-yellow)](https://www.youtube.com/watch?v=PjXUOong-DI)
+## Rotify Demo
+[![Rotify Demo](https://img.youtube.com/vi/PjXUOong-DI/0.jpg)](https://www.youtube.com/watch?v=PjXUOong-DI)
 
 <p align="center">
   <img width="800" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/f9e626dd-5323-4e58-9741-8848bcbb3bbb" />

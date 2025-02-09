@@ -134,13 +134,6 @@ const WebSocketComponent = ({ summaryContext }) => {
                             </span>
                         </div>
                     ))}
-                    {isTyping && (
-                        <div className="mb-3 text-left">
-                            <span className="inline-block px-3 py-2 rounded-xl bg-gray-100 text-black">
-                                Typing...
-                            </span>
-                        </div>
-                    )}
                 </div>
 
                 {/* Input and Buttons Container */}

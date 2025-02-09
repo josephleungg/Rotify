@@ -1,6 +1,6 @@
 import express from 'express';
 import { scrapeWebpage } from '../utils/webscraperService.js';
-import { summarizeContent, summarizePrompt } from '../utils/openaiService.js';
+import { summarizeContent, summarizePrompt, createQuiz } from '../utils/openaiService.js';
 import fileUpload from 'express-fileupload';
 import pdfParse from 'pdf-parse';
 
@@ -61,6 +61,22 @@ router.post("/summarize_text", async (req, res) => {
 
         console.log(summary);
         res.status(200).json({ summary });
+    } catch (error) {
+        console.error('Error processing text:', error);
+        res.status(500).send("Error processing text.");
+    }
+});
+
+// QUIZ PROMPT ROUTE
+// POST route to create a quiz from user text prompt
+router.post("/create_quiz", async (req, res) => {
+    const { text } = req.body;
+
+    try {
+        const quiz = await createQuiz(text);
+
+        console.log(quiz);
+        res.status(200).json(quiz);
     } catch (error) {
         console.error('Error processing text:', error);
         res.status(500).send("Error processing text.");

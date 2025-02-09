@@ -75,3 +75,70 @@ export async function summarizePrompt(textContent) {
         throw error;
     }
 };
+
+// generate a response from openAI given a prompt to generate a quiz
+// Returns an object with the format
+export async function createQuiz(prompt) {
+
+    try {
+
+        console.log('--------------------------------------------------');
+        console.log('Generating OpenAI quiz response...');
+        console.log('--------------------------------------------------');
+
+        // generate a quiz based on the main idea of the text
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [{ role: "user", content: `Create a 5-question quiz based on the main idea of this text: ${prompt}.` }],
+            functions: [
+                {
+                    name: "generate_quiz",
+                    description: "Creates a multiple-choice quiz with 5 questions.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            quizTitle: { type: "string", description: "Title of the quiz" },
+                            questions: {
+                                type: "array",
+                                items: {
+                                    type: "object",
+                                    properties: {
+                                        questionId: { type: "integer", description: "Question number" },
+                                        questionText: { type: "string", description: "The question" },
+                                        options: {
+                                            type: "array",
+                                            items: {
+                                                type: "object",
+                                                properties: {
+                                                    optionId: { type: "string", description: "A, B, C, or D" },
+                                                    text: { type: "string", description: "Answer choice" }
+                                                }
+                                            }
+                                        },
+                                        correctAnswer: { type: "string", description: "The correct answer (A, B, C, or D)" }
+                                    },
+                                    required: ["questionId", "questionText", "options", "correctAnswer"]
+                                }
+                            }
+                        },
+                        required: ["quizTitle", "questions"]
+                    }
+                }
+            ],
+            function_call: "auto"
+        });
+    
+        console.log('--------------------------------------------------');
+        console.log('Generated OpenAI quiz');
+        console.log('--------------------------------------------------');
+
+        // Parse the function call arguments
+        const functionCallArguments = JSON.parse(response.choices[0].message.function_call.arguments);
+    
+        return functionCallArguments;
+
+    } catch (error) {
+        console.error('Error generating OpenAI quiz:', error);
+        throw error;
+    }
+};

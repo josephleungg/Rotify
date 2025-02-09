@@ -21,8 +21,8 @@ const WebSocketComponent = ({ summaryContext }) => {
             // Send initialization data as JSON to teach chatbot about the role and summary
             const initData = {
                 type: 'init',
-                role: 'developer', 
-                content: 'you are a assistant answering questions about this topic: ' + summaryContext
+                role: 'developer',
+                content: 'you are a assistant answering questions about this topic: ' + summaryContext,
             };
             ws.current.send(JSON.stringify(initData));
         };

@@ -11,6 +11,10 @@
 </p>
 
 <p align="center">
+  <img width="1000" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/167655f3-272e-493c-889d-d70626127b97" />
+</p>
+
+<p align="center">
   <h2>Rotify</h2>
   <p>Save your time by brain-rotting your mind</p>
 </p>

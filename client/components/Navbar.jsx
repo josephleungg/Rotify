@@ -9,8 +9,10 @@ const Navbar = () => {
     const router = useRouter();
     
     const handleLogoClick = () => {
-        router.push('/');
-    }
+        window.speechSynthesis.cancel();
+        window.location.href = '/';
+    };
+    
     return (
         <div className="flex flex-row justify-between items-center pt-4 w-full bg-background">
             {/* Logo and Title */}
@@ -43,7 +45,7 @@ const Navbar = () => {
             {/* New button */}
             <div>
                 <div className="mr-12">
-                <button className="flex flex-row gap-2 bg-[#685680] h-[50px] px-4 justify-center items-center rounded-3xl cursor-pointer hover:scale-105 transition-all">
+                <button className="flex flex-row gap-2 bg-[#685680] h-[50px] px-4 justify-center items-center rounded-3xl cursor-pointer hover:scale-105 transition-all" onClick={handleLogoClick}>
                     <h1 className="flex text-[#B1A6C0] font-jaro text-3xl">New</h1>
                     <FontAwesomeIcon icon={faPlus} className="flex h-6 w-6 text-[#B1A6C0]" />
                 </button>

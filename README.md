@@ -1,10 +1,7 @@
 <div align="center">
-  <img src="https://github.com/josephleungg/Rotify/blob/main/client/public/rotify-logo.png?raw=true" alt="drawing" width="300"/>
+  <img src="https://github.com/josephleungg/Rotify/blob/main/client/public/banner.png?raw=true" width="300"/>
   <h1>Rotify</h1>
 </div>
-
-## Rotify Demo
-[![Rotify Demo](https://img.youtube.com/vi/PjXUOong-DI/0.jpg)](https://www.youtube.com/watch?v=PjXUOong-DI)
 
 <p align="center">
   <img width="1000" alt="Rotify Screenshot or Logo" src="https://github.com/user-attachments/assets/167655f3-272e-493c-889d-d70626127b97" />
@@ -52,6 +49,9 @@ Rotify is a web application designed to enhance learning and engagement, particu
 *   [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en)
 *   [![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 *   [![OpenAI](https://img.shields.io/badge/openAI-74aa9c?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
+
+## Rotify Demo! (Click to watch)
+[![Rotify Demo](https://img.youtube.com/vi/PjXUOong-DI/0.jpg)](https://www.youtube.com/watch?v=PjXUOong-DI)
 
 ## Installation
 

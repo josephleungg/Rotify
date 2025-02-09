@@ -1,8 +1,7 @@
 "use client";
 import { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faMessage, faHeart, faBookmark, faQuestion, faShare, faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import WebSocketComponent from './WebSocketComponent';
 // import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -34,30 +33,18 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
   const synth = window.speechSynthesis;
   const videoRef = useRef(null);
   const utteranceRef = useRef(null);
-  const [currentWord, setCurrentWord] = useState('');
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
-  const textBlocks = splitTextIntoBlocks(text);
   const [chatOpen, setChatOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-
-   // toggle the chatOpen state
-   const toggleChat = () => {
-    setChatOpen((prev) => !prev); // Toggle the state
-  };
-  const [togglePlay, setTogglePlay] = useState(true);
-
+  const [togglePlay, setTogglePlay] = useState(false);
+  const textBlocks = splitTextIntoBlocks(text);
 
   const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play();
     }
     if (!isSpeaking && utteranceRef.current) {
-      if (synth.paused) {
-        synth.resume(); // Resume TTS if paused
-      } else {
-        synth.speak(utteranceRef.current); // Start TTS if not already speaking
-      }
+      console.log('Starting TTS');
+      synth.speak(utteranceRef.current);
       setIsSpeaking(true);
     }
     setTogglePlay(true);
@@ -68,10 +55,14 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
       videoRef.current.pause();
     }
     if (isSpeaking) {
-      synth.pause(); // Pause TTS instead of canceling
+      synth.cancel();
       setIsSpeaking(false);
     }
     setTogglePlay(false);
+  };
+
+  const toggleChat = () => {
+    setChatOpen(!chatOpen);
   };
 
   useEffect(() => {
@@ -89,10 +80,27 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
       console.error('Error loading video:', error);
     };
 
+    // Handle video loop
+    videoElement.onended = () => {
+      console.log('Video ended, restarting...');
+      videoElement.currentTime = 0; // Reset video to the start
+      videoElement.play(); // Restart video
+      synth.cancel(); // Stop TTS
+      synth.speak(utteranceRef.current); // Restart TTS
+      setCurrentBlockIndex(0); // Reset captions to the first block
+    };
+
     const utterance = new SpeechSynthesisUtterance(textBlocks.join(' '));
+    utterance.rate = 1; // Adjust TTS speed
+
+    let wordIndex = 0; // Track the current word index
+    let isPausedForPunctuation = false; // Track if we're pausing for punctuation
+
     utterance.onend = () => {
+      console.log('TTS ended');
       setIsSpeaking(false);
       setCurrentBlockIndex(0); // Reset to the first block
+      wordIndex = 0; // Reset word index
       if (videoRef.current) {
         videoRef.current.currentTime = 0; // Reset video to the start
         videoRef.current.play(); // Play the video again
@@ -100,12 +108,42 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
       synth.speak(utterance); // Restart TTS
       setIsSpeaking(true);
     };
+
     utterance.onboundary = (event) => {
-      if (event.name === 'word') {
-        const spokenWord = textBlocks.join(' ').substring(event.charIndex, event.charIndex + event.charLength).trim();
-        setCurrentWord(spokenWord);
+      if (event.name === "word") {
+        const currentWord = textBlocks.join(' ').split(/\s+/)[wordIndex];
+
+        // Check if the current word ends with punctuation
+        const hasPunctuation = /[.,;!?]/.test(currentWord);
+
+        // Calculate the current block index based on the word index
+        const newIndex = Math.floor(wordIndex / 4); // Assuming block size is 4 words
+
+        // Update the block index slightly earlier by checking if we're near the end of the current block
+        if (wordIndex % 4 === 2 && !isPausedForPunctuation) { // Update when the 3rd word of the block is spoken
+          setCurrentBlockIndex(newIndex + 1);
+        }
+
+        wordIndex++;
+
+        // If we've reached the end of the text, reset wordIndex and block index
+        if (wordIndex >= textBlocks.length * 4) {
+          wordIndex = 0;
+          setCurrentBlockIndex(0);
+        }
+
+        // Add a delay if punctuation is detected
+        if (hasPunctuation && !isPausedForPunctuation) {
+          isPausedForPunctuation = true; // Prevent overlapping updates
+          const pauseDuration = currentWord.endsWith('.') ? 700 : 500; // Longer pause for periods, shorter for commas
+          setTimeout(() => {
+            setCurrentBlockIndex((prevIndex) => (prevIndex + 1) % textBlocks.length);
+            isPausedForPunctuation = false; // Reset the pause flag
+          }, pauseDuration);
+        }
       }
     };
+
     utteranceRef.current = utterance;
 
     // Start TTS on page load
@@ -114,42 +152,12 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
     return () => {
       synth.cancel(); // Clean up TTS on component unmount
     };
-  }, []); // Empty dependency array to run only once
-
-  useEffect(() => {
-    // Compare the current word with the last word in the current block
-    const currentBlock = textBlocks[currentBlockIndex];
-    const lastWordInBlock = currentBlock.split(/\s+/).pop();
-    console.log(`Current spoken word: ${currentWord}`);
-    console.log(`Current block's last word: ${lastWordInBlock}`);
-    if (currentWord === lastWordInBlock) {
-      // Move to the next block
-      setCurrentBlockIndex((prevIndex) => (prevIndex + 1) % textBlocks.length);
-    }
-  }, [currentWord, currentBlockIndex, textBlocks]);
-
-  const handleLike = () => {
-    if(isLiked){
-      setIsLiked(false);
-    }
-    else{
-      setIsLiked(true);
-    }
-  }
-  const handleSave = () => {
-    if(isSaved){
-      setIsSaved(false);
-    }
-    else{
-      setIsSaved(true);
-    }
-  }
+  }, []);
 
   return (
     <div className="bg-background h-screen">
-        <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
-          
-          {/* Video and Caption */}
+      <div className="flex flex-row gap-2 items-end justify-center relative w-screen pt-16 bg-background">
+        {/* Video and Caption */}
         <div
           className="relative w-[23%] h-auto max-w-[100%] rounded-3xl overflow-hidden cursor-pointer"
           onClick={togglePlay ? handlePause : handlePlay}
@@ -163,44 +171,44 @@ const VideoModule = ({ text, isSpeaking, setIsSpeaking }) => {
           >
             <FontAwesomeIcon icon={togglePlay ? faPause : faPlay} className="h-6 w-6 text-white opacity-75" />
           </div>
-            {/* Video */}
-            <video
-              ref={videoRef}
-              className="w-full h-full overflow-hidden rounded-3xl"
-              muted
-              controls={false}
-              loop // Add the loop attribute for seamless looping
-              disablePictureInPicture
-            >
-              Your browser does not support the video tag.
-            </video>
-            {/* Captions */}
-            <div className="absolute bottom-[25%] w-full text-center text-white bg-transparent padding-[10px] text-[48px] font-bangers [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)] [-webkit-text-stroke:1px_black]">
-              {textBlocks[currentBlockIndex]}
-            </div>
+          {/* Video */}
+          <video
+            ref={videoRef}
+            className="w-full h-full overflow-hidden rounded-3xl"
+            muted
+            controls={false}
+            loop // Add the loop attribute for seamless looping
+            disablePictureInPicture
+          >
+            Your browser does not support the video tag.
+          </video>
+          {/* Captions */}
+          <div className="absolute bottom-[25%] w-full text-center text-white bg-transparent padding-[10px] text-[48px] font-bangers [text-shadow:2px_2px_4px_rgba(0,0,0,0.5)] [-webkit-text-stroke:1px_black]">
+            {textBlocks[currentBlockIndex]}
           </div>
-      
-          {/* Video Buttons */}
-          <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleLike}>
-            <FontAwesomeIcon icon={faHeart} className={`h-7 w-7 transition-all ${isLiked ? 'text-red-500 animate-heartbeat' : 'text-white'}`} />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={handleSave}>
-              <FontAwesomeIcon icon={faBookmark} className={`h-7 w-7 transition-all ${isSaved ? 'text-yellow-500 animate-heartbeat' : 'text-white'}`} />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
-              <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
-            </div>
-            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
-              <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
-            </div>
-          </div>
+        </div>
 
-          {/* Chat menu */}
-          {chatOpen && <WebSocketComponent />}
+        {/* Video Buttons */}
+        <div className="flex flex-col gap-4 top-0 items-center justify-center mr-8">
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faHeart} className="h-7 w-7 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faBookmark} className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer" onClick={toggleChat}>
+            <FontAwesomeIcon icon={faMessage} className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faQuestion} className="h-7 w-7 text-white" />
+          </div>
+          <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gray-700 hover:bg-gray-600 transition-colors cursor-pointer">
+            <FontAwesomeIcon icon={faShare} className="h-6 w-6 text-white" />
+          </div>
+        </div>
+
+        {/* Chat menu */}
+        {chatOpen && <WebSocketComponent summaryContext={text} />}
       </div>
     </div>
   );

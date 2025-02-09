@@ -14,7 +14,7 @@ Hackathon project for HackHive 2025
 <br/>
 <h4>Rotify is a web application designed to enhance learning and engagement, particularly for Gen Z, by "brainrotting" traditional learning materials. Recognizing the challenges of short attention spans in the digital age, Rotify combines any text-based content—from articles and textbooks to scientific papers—with captivating satisfying footage in the background.  This creates a dynamic, multi-sensory learning experience that keeps users visually engaged and prevents information overload. Rotify aims to make learning more accessible and enjoyable by leveraging the same visual stimulation that often leads to distractions, turning potential brain drain into brain gain.</h4>
 
-## Video Demo (https://img.shields.io/badge/Demo-yellow)
+## Video Demo [![Demo](https://img.shields.io/badge/Demo-yellow)]
 
 ## Features [![Contributors](https://img.shields.io/badge/Features-green)]
 

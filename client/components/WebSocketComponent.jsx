@@ -133,7 +133,7 @@ const WebSocketComponent = ({ summaryContext }) => {
                         <span
                             className={`inline-block px-3 py-2 ${
                                 msg.role === 'user'
-                                    ? 'bg-blue-500 text-white text-left ml-12 rounded-l-xl rounded-tr-xl'
+                                    ? 'bg-blue-500 text-white text-right ml-12 rounded-l-xl rounded-tr-xl'
                                     : 'bg-[#414558] text-white mr-12 rounded-r-xl rounded-tl-xl'
                             }`}
                         >
